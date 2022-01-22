@@ -30,13 +30,13 @@ const dataSlice = createSlice({
             );
             listToDeleteIdx !== -1 && state.taskLists.splice(listToDeleteIdx, 1); // .splice directly modifies the array & returns the removed list.
         },
-        updateActiveList(state, action: PayloadAction<string>) {
+        setActiveList(state, action: PayloadAction<string>) {
             state.activeListId = action.payload;
         },
         replaceAllActiveTasks(state, action: PayloadAction<gapi.client.tasks.Task[]>) {
             state.activeTasks = action.payload;
         },
-        addActiveTask(state, action: PayloadAction<gapi.client.tasks.Task>) {
+        addTask(state, action: PayloadAction<gapi.client.tasks.Task>) {
             state.activeTasks.push(action.payload);
         },
         // deleteTask(state, action: PayloadAction<string>)

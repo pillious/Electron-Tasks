@@ -4,12 +4,12 @@
     border: none;
     font-size: 16px;
     text-align: left;
-    padding: 2px 0;
+    padding: 6px 0;
     cursor: pointer;
 }
 
 .list_nav_btn:hover {
-    border-left: 4px solid #2b96d9;
+    border-left: 4px solid #ff1b6d;
 }
 
 .list_nav_btn div {
@@ -21,4 +21,15 @@
 .list_nav_btn:hover div {
     transform: translateX(15px);
     padding: 0;
+}
+
+.active {
+    border-left: 4px solid #ff1b6d;
+    padding: 6px 0;
+}
+
+.active p {
+    color: #ff1b6d;
+    margin: 0;
+    padding-left: 8px;
 }
