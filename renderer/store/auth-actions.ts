@@ -14,7 +14,8 @@ export const authenticate = () => {
         try {
             // let GoogleAuth: gapi.auth2.GoogleAuth = await initClient();
             await initClient();
-            const GoogleAuth: gapi.auth2.GoogleAuth = gapi.auth2.getAuthInstance();
+            const GoogleAuth: gapi.auth2.GoogleAuth =
+                gapi.auth2.getAuthInstance();
 
             if (GoogleAuth) {
                 // Attach a listner to listen for signed in state updates
@@ -46,20 +47,30 @@ export const authenticate = () => {
 
 // Sign in the user using the Google oAuth popup (permissions are accepted/denied in popup).
 const signIn = async (dispatch: AppDispatch) => {
-    const GoogleAuth: gapi.auth2.GoogleAuth =
-        gapi.auth2.getAuthInstance();
+    const GoogleAuth: gapi.auth2.GoogleAuth = gapi.auth2.getAuthInstance();
 
     try {
         await GoogleAuth.signIn();
         dispatch(authActions.isAuthenticated(true));
     } catch (err: any) {
+        console.log(err);
         throw new Error(err);
     }
-
 };
 
 // Updates redux store with the signed in state when state changes.
 const signinStatusListener = (isSignedIn: boolean, dispatch: AppDispatch) => {
-    console.log(`Signin status updated => ${isSignedIn}`)
+    console.log(`Signin status updated => ${isSignedIn}`);
     dispatch(authActions.isAuthenticated(isSignedIn));
+};
+
+export const signOut = () => {
+    return (dispatch: AppDispatch) => {
+        try {
+            gapi.auth2.getAuthInstance().signOut();
+            // Sign in status will be updated by status listener.
+        } catch (err) {
+            console.log(err);
+        }
+    };
 };

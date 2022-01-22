@@ -1,0 +1,26 @@
+.header {
+    padding: 0 8px;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+}
+
+.header p {
+    grid-column-start: 1;
+}
+
+.header button {
+    grid-column-start: 12;
+    border: 1px solid gray;
+    background-color: transparent;
+    width: 32px;
+    height: 32px;
+    border-radius: 100%;
+}
+
+.profile_btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 100%;
+    background-size: cover;
+    cursor: pointer;
+}

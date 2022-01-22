@@ -30,8 +30,12 @@ const IndexPage: React.FC = () => {
 
     return (
         <div className={classes.wrapper}>
-            <Sidebar />
-            <Main />
+            <div className={classes.sidebar_wrapper}>
+                <Sidebar />
+            </div>
+            <div className={classes.main_wrapper}>
+                <Main />
+            </div>
         </div>
     );
 };
