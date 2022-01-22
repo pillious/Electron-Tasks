@@ -1,9 +1,17 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const initialState: {
-    taskLists: gapi.client.tasks.TaskList[];
+    taskLists: gapi.client.tasks.TaskList[],
+    activeListId: string | null,
+    activeTasks: gapi.client.tasks.Task[],
+    isLoading: boolean,
+    errorMsg: string | null,
 } = {
     taskLists: [],
+    activeListId: null,
+    activeTasks: [],
+    isLoading: false,
+    errorMsg: null
 };
 
 const dataSlice = createSlice({
@@ -22,6 +30,19 @@ const dataSlice = createSlice({
             );
             listToDeleteIdx !== -1 && state.taskLists.splice(listToDeleteIdx, 1); // .splice directly modifies the array & returns the removed list.
         },
+        updateActiveList(state, action: PayloadAction<string>) {
+            state.activeListId = action.payload;
+        },
+        replaceAllActiveTasks(state, action: PayloadAction<gapi.client.tasks.Task[]>) {
+            state.activeTasks = action.payload;
+        },
+        addActiveTask(state, action: PayloadAction<gapi.client.tasks.Task>) {
+            state.activeTasks.push(action.payload);
+        },
+        // deleteTask(state, action: PayloadAction<string>)
+        updateIsLoading(state, action: PayloadAction<boolean>) {
+            state.isLoading = action.payload;
+        }
         // changeListName(state, action: PayloadAction<{id: string, newName: string}>) {},
     },
 });

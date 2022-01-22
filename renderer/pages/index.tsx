@@ -1,4 +1,5 @@
 import { Fragment, useEffect } from 'react';
+import Main from '../components/Main/Main';
 import Sidebar from '../components/Sidebar/Sidebar';
 import { useAppDispatch } from '../hooks/useAppDispatch';
 import { useAppSelector } from '../hooks/useAppSelector';
@@ -10,40 +11,27 @@ const IndexPage: React.FC = () => {
     const dispatch = useAppDispatch();
     const isAuthenticated = useAppSelector((state) => state.auth.authenticated);
 
-    const taskLists = useAppSelector((state) => state.data.taskLists);
-
-    // // Authenticate user on load.
-    // useEffect(() => {
-    //     dispatch(authenticate());
-    // }, [dispatch]);
-
-    // // Get user's Google Task lists once authenticated.
-    // useEffect(() => {
-    //     if (isAuthenticated) {
-    //         dispatch(getAllLists());
-    //     }
-    // }, [isAuthenticated, dispatch]);
-
-    // Reduce http calls during dev.
+    // Authenticate user on load.
     useEffect(() => {
-        dispatch(getAllLists());
+        dispatch(authenticate());
     }, [dispatch]);
 
-    let content = <div>No Lists.</div>;
-    if (taskLists && taskLists.length > 0) {
-        content = (
-            <Fragment>
-                {taskLists.map((list) => (
-                    <div key={list.id}>{list.title}</div>
-                ))}
-            </Fragment>
-        );
-    }
+    // Get user's Google Task lists once authenticated.
+    useEffect(() => {
+        if (isAuthenticated) {
+            dispatch(getAllLists());
+        }
+    }, [isAuthenticated, dispatch]);
+
+    // Reduce http calls during dev.
+    // useEffect(() => {
+    //     dispatch(getAllLists());
+    // }, [dispatch]);
 
     return (
         <div className={classes.wrapper}>
             <Sidebar />
-            <div>{content}</div>
+            <Main />
         </div>
     );
 };
