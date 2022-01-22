@@ -1,0 +1,6 @@
+.lists_nav {
+    padding-top: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}

@@ -1,30 +1,51 @@
-import { useEffect } from 'react'
-import Link from 'next/link'
-import Layout from '../components/Layout'
+import { Fragment, useEffect } from 'react';
+import Sidebar from '../components/Sidebar/Sidebar';
+import { useAppDispatch } from '../hooks/useAppDispatch';
+import { useAppSelector } from '../hooks/useAppSelector';
+import { authenticate } from '../store/auth-actions';
+import { getAllLists } from '../store/data-actions';
+import classes from './index.module.css';
 
-const IndexPage = () => {
-  useEffect(() => {
-    // add a listener to 'message' channel
-    global.ipcRenderer.addListener('message', (_event, args) => {
-      alert(args)
-    })
-  }, [])
+const IndexPage: React.FC = () => {
+    const dispatch = useAppDispatch();
+    const isAuthenticated = useAppSelector((state) => state.auth.authenticated);
 
-  const onSayHiClick = () => {
-    global.ipcRenderer.send('message', 'hi from next')
-  }
+    const taskLists = useAppSelector((state) => state.data.taskLists);
 
-  return (
-    <Layout title="Home | Next.js + TypeScript + Electron Example">
-      <h1>Hello Next.js 👋</h1>
-      <button onClick={onSayHiClick}>Say hi to electron</button>
-      <p>
-        <Link href="/about">
-          <a>About</a>
-        </Link>
-      </p>
-    </Layout>
-  )
-}
+    // // Authenticate user on load.
+    // useEffect(() => {
+    //     dispatch(authenticate());
+    // }, [dispatch]);
 
-export default IndexPage
+    // // Get user's Google Task lists once authenticated.
+    // useEffect(() => {
+    //     if (isAuthenticated) {
+    //         dispatch(getAllLists());
+    //     }
+    // }, [isAuthenticated, dispatch]);
+
+    // Reduce http calls during dev.
+    useEffect(() => {
+        dispatch(getAllLists());
+    }, [dispatch]);
+
+    let content = <div>No Lists.</div>;
+    if (taskLists && taskLists.length > 0) {
+        content = (
+            <Fragment>
+                {taskLists.map((list) => (
+                    <div key={list.id}>{list.title}</div>
+                ))}
+            </Fragment>
+        );
+    }
+
+    return (
+        <div className={classes.wrapper}>
+            <Sidebar />
+            <div>{content}</div>
+        </div>
+    );
+};
+
+export default IndexPage;

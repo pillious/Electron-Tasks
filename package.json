@@ -13,15 +13,21 @@
     "type-check": "tsc"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.7.1",
     "electron-is-dev": "^1.1.0",
     "electron-next": "^3.1.5",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react-dom": "^17.0.2",
+    "react-redux": "^7.2.6"
   },
   "devDependencies": {
+    "@types/gapi.auth2": "^0.0.55",
+    "@types/gapi.client.tasks": "^1.0.4",
+    "@types/jest": "^27.4.0",
     "@types/node": "^14.14.6",
     "@types/react": "^16.9.9",
     "@types/react-dom": "^16.9.9",
+    "@types/react-redux": "^7.1.22",
     "electron": "^13",
     "electron-builder": "^22.9.1",
     "next": "latest",
