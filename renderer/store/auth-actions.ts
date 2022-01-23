@@ -50,7 +50,8 @@ const signIn = async (dispatch: AppDispatch) => {
     const GoogleAuth: gapi.auth2.GoogleAuth = gapi.auth2.getAuthInstance();
 
     try {
-        await GoogleAuth.signIn();
+        // await GoogleAuth.signIn();
+        await GoogleAuth.signIn({ux_mode: 'redirect'})
         dispatch(authActions.isAuthenticated(true));
     } catch (err: any) {
         console.log(err);
