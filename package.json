@@ -1,7 +1,7 @@
 {
   "private": true,
   "main": "main/index.js",
-  "productName": "ElectronTypescriptNext",
+  "productName": "Google Tasks Desktop Client",
   "scripts": {
     "clean": "rimraf dist main renderer/out renderer/.next",
     "dev": "npm run build-electron && electron .",
@@ -14,13 +14,11 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.7.1",
-    "@types/styled-components": "^5.1.21",
     "electron-is-dev": "^1.1.0",
     "electron-next": "^3.1.5",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-redux": "^7.2.6",
-    "styled-components": "^5.3.3"
+    "react-redux": "^7.2.6"
   },
   "devDependencies": {
     "@types/gapi.auth2": "^0.0.55",

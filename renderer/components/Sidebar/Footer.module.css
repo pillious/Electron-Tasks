@@ -1,0 +1,6 @@
+.btn_wrapper {
+    width: 100%;
+    padding-top: 32px;
+    display: flex;
+    justify-content: center;
+}

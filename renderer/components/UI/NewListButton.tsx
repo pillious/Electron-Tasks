@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import classes from "./NewListButton.module.css";
 
-const NewListButton: React.FC<{
+interface Props {
     btnStyles: {
         height: number | string;
         width: number | string;
@@ -11,7 +11,13 @@ const NewListButton: React.FC<{
         color?: string;
         backgroundColor?: string;
     };
-}> = (props) => {
+    onClick: () => void;
+}
+
+const NewListButton: React.FC<Props> = (props) => {
+    const [isHovering, setIsHovering] = useState(false);
+    const [showModal, setShowModal] = useState(false);
+
     const {
         height,
         width,
@@ -21,8 +27,6 @@ const NewListButton: React.FC<{
         color,
         backgroundColor,
     } = props.btnStyles;
-
-    const [isHovering, setIsHovering] = useState(false);
 
     let styles = {
         height: height,
@@ -35,25 +39,27 @@ const NewListButton: React.FC<{
     };
 
     if (isHovering) {
-        
         let hoverStyles = {
-            color: backgroundColor ? backgroundColor : '#fff',
-            backgroundColor: color ? color : '#2b96d9',
-        }
-        styles = {...styles, ...hoverStyles};
+            color: backgroundColor ? backgroundColor : "#fff",
+            backgroundColor: color ? color : "#2b96d9",
+        };
+        styles = { ...styles, ...hoverStyles };
     }
 
     const clickHandler = () => {};
 
     return (
-        <button
-            className={classes.new_list_btn}
-            style={styles}
-            onMouseEnter={() => setIsHovering(true)}
-            onMouseLeave={() => setIsHovering(false)}
-        >
-            {props.children}
-        </button>
+        <Fragment>
+            <button
+                className={classes.new_list_btn}
+                style={styles}
+                onMouseEnter={() => setIsHovering(true)}
+                onMouseLeave={() => setIsHovering(false)}
+                onClick={props.onClick}
+            >
+                {props.children}
+            </button>
+        </Fragment>
     );
 };
 
