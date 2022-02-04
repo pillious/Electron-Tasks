@@ -1,11 +1,17 @@
 .header {
+    height: 40px;
+    border-bottom: 1px solid #f1f3f4;
     padding: 0 8px;
     display: grid;
     grid-template-columns: repeat(12, 1fr);
+    justify-content: center;
+    align-items: center;
 }
 
 .header p {
+    font-size: 20px;
     grid-column-start: 1;
+    grid-column-end: 11;
 }
 
 .header button {

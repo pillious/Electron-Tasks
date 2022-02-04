@@ -1,11 +1,11 @@
 import Header from './Header';
-import Tasks from './Tasks';
+import TaskList from './TaskList/TaskList';
 
 const Main: React.FC = () => {
     return (
         <main>
             <Header />
-            <Tasks />
+            <TaskList />
         </main>
     );
 };

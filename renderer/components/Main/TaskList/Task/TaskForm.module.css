@@ -1,0 +1,44 @@
+.task_form {
+    padding: 0 6px;
+}
+
+.active {
+    background-color: #eee;
+    border-radius: 5px;
+}
+
+.task_form input{
+    border: none;
+    outline: none;
+    margin-bottom: 2px;
+    background-color: transparent;
+}
+
+.task_form textarea {
+    border: none;
+    outline: none;
+    background-color: transparent;
+    resize: vertical;
+    font-size: 16px;
+}
+
+.task_form textarea::placeholder {
+    color: rgb(64, 64, 64);
+}
+
+.title {
+    font-size: 20px;
+    border: none;
+    background-color: transparent;
+}
+
+.expandable {
+    display: flex;
+    flex-direction: column;
+    padding: 8px 0 0 16px;
+}
+
+.expandable input {
+    font-size: 18px;
+
+}

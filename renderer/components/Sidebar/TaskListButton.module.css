@@ -2,7 +2,7 @@
     font-family: Lato;
     background-color: transparent;
     border: none;
-    font-size: 16px;
+    font-size: 20px;
     text-align: left;
     padding: 6px 0;
     cursor: pointer;
@@ -32,4 +32,5 @@
     color: #ff1b6d;
     margin: 0;
     padding-left: 8px;
+    font-size: 20px;
 }

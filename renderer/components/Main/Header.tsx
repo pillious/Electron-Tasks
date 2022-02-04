@@ -1,18 +1,32 @@
-import { useAppDispatch } from '../../hooks/useAppDispatch';
-import { useAppSelector } from '../../hooks/useAppSelector';
-import { signOut } from '../../store/auth-actions';
-import classes from './Header.module.css';
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { useAppSelector } from "../../hooks/useAppSelector";
+import { signOut } from "../../store/auth-actions";
+import classes from "./Header.module.css";
 
 const Header: React.FC = () => {
     const dispatch = useAppDispatch();
 
     const isAuthenticated = useAppSelector((state) => state.auth.authenticated);
+    const activeListTitle = useAppSelector((state) => {
+        let title = "";
+
+        if (state.auth.authenticated) {
+            let activeListId = state.data.activeListId;
+            let allLists = state.data.taskLists;
+            let activeList = allLists.find((list) => list.id === activeListId);
+            if (activeList !== undefined) {
+                title = activeList.title;
+            }
+        }
+
+        return title;
+    });
 
     const clickHandler = () => {
         dispatch(signOut());
     };
 
-    let profileImg = '';
+    let profileImg = "";
     let btnStyles: {
         backgroundImage: string;
     };
@@ -30,7 +44,7 @@ const Header: React.FC = () => {
 
     return (
         <section className={classes.header}>
-            <p>Current List</p>
+            <p>Active List: {activeListTitle}</p>
             {/* TODO: add Sign out dropdown */}
             <button
                 onClick={clickHandler}

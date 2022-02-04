@@ -1,7 +1,7 @@
 import { Fragment } from 'react';
 import { useAppSelector } from '../../hooks/useAppSelector';
-import TaskList from './TaskList';
-import classes from './TaskLists.module.css';
+import TaskList from './TaskListButton';
+import classes from './TaskListButtonGroup.module.css';
 
 const TaskLists: React.FC = () => {
     const taskLists = useAppSelector((state) => state.data.taskLists);

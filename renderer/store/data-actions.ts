@@ -16,14 +16,11 @@ export const getAllLists = () => {
             let taskLists: gapi.client.tasks.TaskList[] = resp.result.items;
 
             if (taskLists && taskLists.length > 0) {
-                // let lists: gapi.client.tasks.TaskList[] = taskLists;
-                // for (const list of taskLists) {
-                //     lists.push(list);
-                // }
-
-                console.log(taskLists);
-
                 dispatch(dataActions.replaceAllLists(taskLists));
+                // Set the default active list to the first task list.
+                dispatch(dataActions.setActiveList(taskLists[0].id));
+                // Get the tasks of the default active list.
+                dispatch(getListTasks(taskLists[0].id));
             }
         } catch (error: any) {
             console.log(error);
@@ -44,6 +41,9 @@ export const getListTasks = (id: string) => {
         
         if (tasks && tasks.length > 0) {
             dispatch(dataActions.replaceAllActiveTasks(tasks));
+        }
+        else {
+            dispatch(dataActions.replaceAllActiveTasks([]));
         }
     }
 }

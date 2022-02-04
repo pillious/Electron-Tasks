@@ -1,0 +1,5 @@
+.new_list_btn {
+    padding: 0;
+    cursor: pointer;
+    transition: all 0.15s ease-out;
+}
