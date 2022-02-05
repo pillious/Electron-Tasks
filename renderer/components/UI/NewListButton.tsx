@@ -11,12 +11,11 @@ interface Props {
         color?: string;
         backgroundColor?: string;
     };
-    onClick: () => void;
+    onClick?: () => void | null;
 }
 
 const NewListButton: React.FC<Props> = (props) => {
     const [isHovering, setIsHovering] = useState(false);
-    const [showModal, setShowModal] = useState(false);
 
     const {
         height,
@@ -45,8 +44,6 @@ const NewListButton: React.FC<Props> = (props) => {
         };
         styles = { ...styles, ...hoverStyles };
     }
-
-    const clickHandler = () => {};
 
     return (
         <Fragment>

@@ -2,11 +2,11 @@
     padding: 8px 0 0 8px;
 }
 
-.new_task_btn {
-    margin-bottom: 8px;
-}
-
 .list {
     list-style: none;
     width: 256px;
+}
+
+.btn_wrapper {
+    padding-bottom: 8px;
 }

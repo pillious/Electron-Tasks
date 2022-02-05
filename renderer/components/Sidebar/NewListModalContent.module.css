@@ -1,0 +1,52 @@
+.form_control {
+    display: flex;
+    flex-direction: column;
+    padding: 8px;
+}
+
+.form_control label {
+    font-size: 16px;
+    padding-bottom: 4px;
+}
+
+.form_control input {
+    margin-bottom: 8px;
+    font-size: 16px;
+    padding: 4px;
+}
+
+.form_control input:focus {
+    outline: none;
+}
+
+.btn_group {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btn_group button {
+    font-size: 16px;
+    padding: 4px;
+    cursor: pointer;
+}
+
+.btn_group button:hover,
+.btn_group button:focus-visible {
+    outline: none;
+    transform: scale(1.1);
+}
+
+.btn_group button:first-child {
+    margin-right: 8px;
+    background-color: transparent;
+    color: #ff1b6d;
+    border: 1px solid #ff1b6d;
+    transition: all 0.1s ease-out;
+}
+
+.btn_group button:last-child {
+    background-color: #2b96d9;
+    color: #fff;
+    border: none;
+}

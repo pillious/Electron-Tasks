@@ -1,7 +1,8 @@
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
 import { useAppSelector } from "../../../hooks/useAppSelector";
+import NewListButton from "../../UI/NewListButton";
 import Task from "./Task/Task";
-import classes from './TaskList.module.css';
+import classes from "./TaskList.module.css";
 
 const TaskList: React.FC = () => {
     const tasks = useAppSelector((state) => state.data.activeTasks);
@@ -17,9 +18,17 @@ const TaskList: React.FC = () => {
         );
     }
 
+    const btnStyles = { height: 32, width: 100, fontSize: 16, borderRadius: 8 };
+
+    const clickHandler = () => {};
+
     return (
         <section className={classes.list_wrapper}>
-            <button className={classes.new_task_btn}>New Task</button>
+            <div className={classes.btn_wrapper}>
+                <NewListButton btnStyles={btnStyles} onClick={clickHandler}>
+                    <span>Add Task</span>
+                </NewListButton>
+            </div>
             <ul className={classes.list}>{listItems}</ul>
         </section>
     );

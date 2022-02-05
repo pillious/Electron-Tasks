@@ -1,9 +1,31 @@
-.overlay {
+.wrapper {
     position: absolute;
     top: 0;
     left: 0;
     height: 100%;
     width: 100%;
-    background-color: rgba(204, 204, 204, 0.25);
-    z-index: 10;
+    display: flex;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.overlay {
+    height: 100%;
+    width: 100%;
+    background-color: rgba(170, 170, 170, 0.35);
+}
+
+.modal {
+    background-color: #fff;
+    border: none;
+    box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    position: absolute;
+    transform:translateY(15vh);
+}
+
+.title {
+    font-size: 20px;
+    padding: 8px 0 8px 8px;
+    border-bottom: 1px solid #f1f3f4;
 }

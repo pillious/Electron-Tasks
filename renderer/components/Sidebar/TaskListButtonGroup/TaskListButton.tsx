@@ -1,7 +1,7 @@
 import { Fragment } from 'react';
-import { useAppDispatch } from '../../hooks/useAppDispatch';
-import { dataActions } from '../../store/data-slice';
-import { getListTasks } from '../../store/data-actions';
+import { useAppDispatch } from '../../../hooks/useAppDispatch';
+import { dataActions } from '../../../store/data-slice';
+import { getListTasks } from '../../../store/data-actions';
 import classes from './TaskListButton.module.css';
 
 const TaskList: React.FC<{ id: string; title: string; active: boolean }> = (

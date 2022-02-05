@@ -1,7 +1,7 @@
 import NewListButton from "../UI/NewListButton";
 import classes from './Footer.module.css';
 
-const Footer: React.FC<{openModal: () => void}> = (props) => {
+const Footer: React.FC<{openModal: () => void | null}> = (props) => {
     return (
         <div className={classes.btn_wrapper}>
             <NewListButton

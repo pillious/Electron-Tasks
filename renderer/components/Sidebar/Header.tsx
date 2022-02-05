@@ -1,7 +1,7 @@
 import NewListButton from "../UI/NewListButton";
 import classes from "./Header.module.css";
 
-const Header: React.FC<{ openModal: () => void }> = (props) => {
+const Header: React.FC<{ openModal: () => void | null}> = (props) => {
     return (
         <div className={classes.header}>
             <p>My Lists</p>
