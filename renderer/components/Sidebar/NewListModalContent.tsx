@@ -1,6 +1,7 @@
-import { MutableRefObject, useRef } from "react";
+import { useRef } from "react";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { createList } from "../../store/data-actions";
+import ModalButtonGroup from "../UI/ModalButtonGroup";
 import classes from "./NewListModalContent.module.css";
 
 const NewListModalContent: React.FC<{
@@ -8,13 +9,6 @@ const NewListModalContent: React.FC<{
 }> = (props) => {
     const dispatch = useAppDispatch();
     const titleInputRef = useRef(null);
-
-    // const openModal = props.modalRef.current
-    //     ? props.modalRef.current.open
-    //     : null;
-    // const closeModal = props.modalRef.current
-    //     ? props.modalRef.current.close
-    //     : null;
 
     const submitHandler = (event) => {
         event.preventDefault();
@@ -37,12 +31,7 @@ const NewListModalContent: React.FC<{
                 placeholder="Name"
                 ref={titleInputRef}
             />
-            <div className={classes.btn_group}>
-                <button type="button" onClick={props.closeModal}>
-                    Cancel
-                </button>
-                <button type="submit">Create</button>
-            </div>
+            <ModalButtonGroup onCancel={props.closeModal} />
         </form>
     );
 };

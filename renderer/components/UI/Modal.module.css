@@ -25,7 +25,8 @@
 }
 
 .title {
-    font-size: 20px;
+    font-size: 1rem;
+    /* font-size: clamp(1rem, 1.5vw , 1.125rem); */
     padding: 8px 0 8px 8px;
     border-bottom: 1px solid #f1f3f4;
 }

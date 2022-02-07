@@ -7,15 +7,16 @@ const Footer: React.FC<{openModal: () => void | null}> = (props) => {
             <NewListButton
                 btnStyles={{
                     height: 38,
-                    width: 196,
+                    padding: "0 clamp(0rem, 5vw, 5rem)",
                     borderRadius: 6,
-                    fontSize: 20,
+                    fontSize: "1rem",
+                    // fontSize: "clamp(1rem, 1.5vw , 1.125rem)",
                     backgroundColor: "#2b96d9",
                     color: "#fff",
                 }}
                 onClick={props.openModal}
             >
-                <span>Create New List</span>
+                <span>Create List</span>
             </NewListButton>
         </div>
     );

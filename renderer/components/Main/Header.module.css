@@ -9,7 +9,8 @@
 }
 
 .header p {
-    font-size: 20px;
+    font-size: 1rem;
+    /* font-size: clamp(1rem, 1.5vw , 1.125rem); */
     grid-column-start: 1;
     grid-column-end: 11;
 }

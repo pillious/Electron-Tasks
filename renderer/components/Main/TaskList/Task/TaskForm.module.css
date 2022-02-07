@@ -19,7 +19,8 @@
     outline: none;
     background-color: transparent;
     resize: vertical;
-    font-size: 16px;
+    font-size: 0.75rem;
+    /* font-size: clamp(0.8rem, 1.5vw , 1rem); */
 }
 
 .task_form textarea::placeholder {
@@ -27,7 +28,8 @@
 }
 
 .title {
-    font-size: 20px;
+    font-size: 1rem;
+    /* font-size: clamp(1rem, 1.5vw , 1.125rem); */
     border: none;
     background-color: transparent;
 }
@@ -39,6 +41,6 @@
 }
 
 .expandable input {
-    font-size: 18px;
-
+    font-size: 1rem;
+    /* font-size: clamp(1rem, 1.5vw , 1.125rem); */
 }

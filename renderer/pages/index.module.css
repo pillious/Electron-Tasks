@@ -6,8 +6,10 @@
 
 .sidebar_wrapper {
     width: 25%;
+    min-width: 175px;
+    max-width: 450px;
 }
 
 .main_wrapper {
-    width: calc(100% - 20%);
+    width: 100%;
 }

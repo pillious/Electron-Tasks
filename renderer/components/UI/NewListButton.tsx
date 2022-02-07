@@ -4,7 +4,9 @@ import classes from "./NewListButton.module.css";
 interface Props {
     btnStyles: {
         height: number | string;
-        width: number | string;
+        width?: number | string;
+        padding?: number | string;
+        margin?: number | string;
         fontSize?: number | string;
         borderRadius?: number | string;
         borderColor?: string;
@@ -20,6 +22,8 @@ const NewListButton: React.FC<Props> = (props) => {
     const {
         height,
         width,
+        padding,
+        margin,
         fontSize,
         borderRadius,
         borderColor,
@@ -29,7 +33,9 @@ const NewListButton: React.FC<Props> = (props) => {
 
     let styles = {
         height: height,
-        width: width,
+        width: width ? width : 'unset',
+        padding: padding ? padding : 0,
+        margin: margin ? margin : 0,
         fontSize: fontSize ? fontSize : 16,
         color: color ? color : "#2b96d9",
         backgroundColor: backgroundColor ? backgroundColor : "transparent",

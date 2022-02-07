@@ -22,6 +22,8 @@ function MyApp({ Component, pageProps }: AppProps) {
                 }
             `}</style>
             <Head>
+                <meta charSet="UTF-8" />
+                <meta name="viewport" content="width=device-width" />
                 <meta
                     httpEquiv="Content-Security-Policy"
                     content="script-src 'self' 'unsafe-eval' https://apis.google.com"
