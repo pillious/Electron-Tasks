@@ -1,13 +1,14 @@
 import { Fragment, useRef } from "react";
 import { useAppSelector } from "../../../hooks/useAppSelector";
 import Modal from "../../UI/Modal";
-import ModalButtonGroup from "../../UI/ModalButtonGroup";
 import NewListButton from "../../UI/NewListButton";
+import NewTaskModalContent from "./NewTaskModalContent";
 import Task from "./Task/Task";
 import classes from "./TaskList.module.css";
 
 const TaskList: React.FC = () => {
     const tasks = useAppSelector((state) => state.data.activeTasks);
+    const activeListId = useAppSelector((state) => state.data.activeListId);
 
     let listItems;
     if (tasks && tasks.length > 0) {
@@ -32,7 +33,7 @@ const TaskList: React.FC = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
         // TODO: handle add task form submut.
-    }
+    };
 
     return (
         <section className={classes.list_wrapper}>
@@ -43,10 +44,7 @@ const TaskList: React.FC = () => {
             </div>
             <ul className={classes.list}>{listItems}</ul>
             <Modal ref={modalRef} width={400} title="Add Task">
-                <form onSubmit={handleSubmit}>
-                    {/* Add custom hook for inputs */}
-                    <ModalButtonGroup onCancel={closeModal}/>
-                </form>
+                <NewTaskModalContent closeModal={closeModal} listId={activeListId}/>
             </Modal>
         </section>
     );

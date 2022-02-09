@@ -1,0 +1,22 @@
+.form_control {
+    display: flex;
+    flex-direction: column;
+    padding: 8px;
+}
+
+.form_control label {
+    font-size: 0.75rem;
+    padding-bottom: 4px;
+}
+
+.form_control input,
+.form_control textarea {
+    margin-bottom: 8px;
+    font-size: 0.75rem;
+    padding: 4px;
+}
+
+.form_control input:focus,
+.form_control textarea:focus {
+    outline: none;
+}
