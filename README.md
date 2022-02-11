@@ -18,35 +18,21 @@
 </div>
 
 <!-- TABLE OF CONTENTS -->
-<details>
-  <summary>Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#inspiration">Inspiration</a></li>
-        <li><a href="#challenges">Challenges</a></li>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#setup">Setup</a></li>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
-    </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
-  </ol>
-</details>
+### Contents:
+  - [About the Project](#-about-the-project)
+      - [Inspiration](#inspiration)
+      - [Challenges](#challenges)
+      - [Built With](#built-with)
+  - [Getting Started](#-getting-started)
+  - [Usage](#-usage)
+  - [Contact](#-contact)
+  - [License](#-license)
+  - [Acknowledgement](#-acknowledgement)
+
 
 <!-- ABOUT THE PROJECT -->
 
-## About The Project
+## 💡 About The Project
 
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
 
@@ -76,7 +62,7 @@ The largest obstacle I overcame during development was the lack of detailed docu
 
 <!-- GETTING STARTED -->
 
-## Getting Started
+## 🚀 Getting Started
 
 To get a local copy up and running follow these steps.
 
@@ -129,13 +115,13 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 
 <!-- LICENSE -->
 
-## License
+## ⚖️ License
 
 Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 <!-- CONTACT -->
 
-## Contact
+## 🎯 Contact 
 
 Andrew Lee (pillious) - andrewzhlee@gmail.com
 <br>
@@ -143,7 +129,7 @@ Andrew Lee (pillious) - andrewzhlee@gmail.com
 
 <!-- ACKNOWLEDGMENTS -->
 
-## Acknowledgments
+## 📚 Acknowledgments
 
 -   [Electron Template with Next.js & Typescript](https://github.com/vercel/next.js/tree/canary/examples/with-electron-typescript)
 
