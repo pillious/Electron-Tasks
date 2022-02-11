@@ -24,6 +24,8 @@
     <li>
       <a href="#about-the-project">About The Project</a>
       <ul>
+        <li><a href="#inspiration">Inspiration</a></li>
+        <li><a href="#challenges">Challenges</a></li>
         <li><a href="#built-with">Built With</a></li>
       </ul>
     </li>
@@ -48,9 +50,17 @@
 
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
 
-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letrase.
+### Inspiration
+Being an avid user of Google Tasks, I found the lack of a desktop client to be an inconvenince. Whenever I needed to access my todo lists on my laptop, I would have to navigate to Google Calendar, which took precious seconds to load (Google Tasks doesn't have a dedicated website). 
+<br>
+So how did I go about saving myself those few seconds a day? 
+<br/>
+I spent hours building a desktop client for Google Tasks, of course.
 
-<p align="right">(<a href="#top">back to top</a>)</p>
+### Challenges
+Having never built a desktop application, It was a challenge to understand the basics of Electron and integrate it with Next.js
+
+The largest obstacle I overcame during development was the lack of detailed documention for Google's APIs. 
 
 ### Built With
 
@@ -68,8 +78,7 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
 
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+To get a local copy up and running follow these steps.
 
 ### Prerequisites
 
@@ -95,7 +104,7 @@ npm install npm@latest -g
     ```sh
     npm install
     ```
-3. Create the `.env.local` file inside the `./renderer` folder.
+3. Create a `.env.local` file inside the `./renderer` folder.
 4. Enter your Google Cloud project secrets in `env.local`
     ```
     NEXT_PUBLIC_CLIENT_ID=your_api_key
@@ -110,13 +119,13 @@ npm install npm@latest -g
 
 <!-- USAGE EXAMPLES -->
 
-## Usage
+<!-- ## Usage
 
 Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
 
 _For more examples, please refer to the [Documentation](https://example.com)_
 
-<p align="right">(<a href="#top">back to top</a>)</p>
+<p align="right">(<a href="#top">back to top</a>)</p> -->
 
 <!-- LICENSE -->
 
