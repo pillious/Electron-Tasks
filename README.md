@@ -3,10 +3,6 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/pillious/Electron-Tasks">
-    <img src="assets/logo.png" alt="Logo" width="80" height="80">
-  </a>
-
 <h3 align="center">Electron Tasks</h3>
 
   <p align="center">
