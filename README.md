@@ -18,35 +18,37 @@
 </div>
 
 <!-- TABLE OF CONTENTS -->
-### Contents:
-  - [About the Project](#-about-the-project)
-      - [Inspiration](#inspiration)
-      - [Challenges](#challenges)
-      - [Built With](#built-with)
-  - [Getting Started](#-getting-started)
-  - [Usage](#-usage)
-  - [Contact](#-contact)
-  - [License](#-license)
-  - [Acknowledgement](#-acknowledgement)
 
+<!-- ### Contents:
+
+-   [About the Project](#-about-the-project)
+    -   [Inspiration](#inspiration)
+    -   [Challenges](#challenges)
+    -   [Built With](#built-with)
+-   [Getting Started](#-getting-started)
+-   [Usage](#-usage)
+-   [Contact](#-contact)
+-   [License](#-license)
+-   [Acknowledgement](#-acknowledgement) -->
 
 <!-- ABOUT THE PROJECT -->
 
 ## 💡 About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+![App Screenshot](./assets/app.png)
 
 ### Inspiration
-Being an avid user of Google Tasks, I found the lack of a desktop client to be an inconvenince. Whenever I needed to access my todo lists on my laptop, I would have to navigate to Google Calendar, which took precious seconds to load (Google Tasks doesn't have a dedicated website). 
+
+Being an avid user of Google Tasks, I found the lack of a desktop client to be an inconvenince. Whenever I needed to access my todo lists on my laptop, it would take me quite a few seconds to would have to navigate to my task lists.
 <br>
-So how did I go about saving myself those few seconds a day? 
+So how did I go about saving myself those few seconds a day?
 <br/>
 I spent hours building a desktop client for Google Tasks, of course.
 
-### Challenges
-Having never built a desktop application, It was a challenge to understand the basics of Electron and integrate it with Next.js
+<!-- ### Challenges
+The first big challenge I faced was setting up the project and integrating the different technologies with each other. My first iteration of the project couldn't run the Electron.js desktop client without a seperate instance of the project running in the background. While switching 
 
-The largest obstacle I overcame during development was the lack of detailed documention for Google's APIs. 
+Learning to use Google's APIs was extremely challenging. Many of the API features lacked detailed documentation, which made the endpoints difficult to use. To figure out the  -->
 
 ### Built With
 
@@ -75,13 +77,15 @@ npm install npm@latest -g
 ```
 
 ### Setup
+
 1. Create a new project on the [Google Cloud Platform](https://console.developers.google.com/).
 2. Navigate to the project's Library tab, and enable Tasks API (not Cloud Tasks API).
 3. In the Credentials tab, create an API key AND a web application OAuth client ID.
-4. Inside your client ID, add `http://locahost:8000` to the authorized JavaScript origins and Authorized redirect URIs.
-4. Finally, Navigate to the OAuth consent screen. Besides filling out the required information, add the scope Tasks API (../auth/tasks).
+4. Inside your client ID settings, add `http://locahost:8000` to the authorized JavaScript origins and Authorized redirect URIs.
+5. Finally, Navigate to the OAuth consent screen. Besides filling out the required information, add the scope Tasks API (../auth/tasks).
 
 ### Installation
+
 1. Clone the repo
     ```sh
     git clone https://github.com/pillious/Electron-Tasks.git
@@ -121,7 +125,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 <!-- CONTACT -->
 
-## 🎯 Contact 
+## 🎯 Contact
 
 Andrew Lee (pillious) - andrewzhlee@gmail.com
 <br>

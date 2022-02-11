@@ -30,6 +30,7 @@ const Header: React.FC = () => {
     let btnStyles: {
         backgroundImage: string;
     };
+
     if (isAuthenticated) {
         let profile = gapi.auth2
             .getAuthInstance()
