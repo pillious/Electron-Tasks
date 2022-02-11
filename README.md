@@ -1,5 +1,7 @@
-## Desktop Client for Google Tasks
-### * In Development *
+# Electron Tasks
+A Desktop Client for Google Tasks
+
+\* In Development *
 
 Challenges:
 - auth
