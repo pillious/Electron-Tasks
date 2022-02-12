@@ -35,7 +35,7 @@
 
 ### Inspiration
 
-Being an avid user of Google Tasks, I found the lack of a desktop client to be an inconvenince. Whenever I needed to access my todo lists on my laptop, it would take me quite a few seconds to would have to navigate to my task lists.
+Being an avid user of Google Tasks, I found the lack of a desktop client to be an inconvenience. Whenever I needed to access my todo lists on my laptop, it would take me quite a few seconds to would have to navigate to my task lists.
 <br>
 So how did I go about saving myself those few seconds a day?
 <br/>
@@ -91,7 +91,7 @@ npm install npm@latest -g
     npm install
     ```
 3. Create a `.env.local` file inside the `./renderer` folder.
-4. Enter your Google Cloud project secrets in `env.local`
+4. Enter your Google Cloud project secrets in `.env.local`
     ```
     NEXT_PUBLIC_CLIENT_ID=your_api_key
     NEXT_PUBLIC_API_KEY=your_api_key
