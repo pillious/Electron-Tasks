@@ -19,6 +19,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                 div#__next {
                     height: 100%;
                     width: 100%;
+                    font-size: 18px;
                 }
             `}</style>
             <Head>

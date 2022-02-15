@@ -1,4 +1,5 @@
 .listitem {
     display: flex;
-    padding-bottom: 12px;
+    padding-bottom: 6px;
+    min-height: 30px;
 }

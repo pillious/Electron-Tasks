@@ -3,7 +3,7 @@ import classes from "./NewListButton.module.css";
 
 interface Props {
     btnStyles: {
-        height: number | string;
+        height?: number | string;
         width?: number | string;
         padding?: number | string;
         margin?: number | string;
@@ -32,11 +32,11 @@ const NewListButton: React.FC<Props> = (props) => {
     } = props.btnStyles;
 
     let styles = {
-        height: height,
-        width: width ? width : 'unset',
+        height: height ? height : "unset",
+        width: width ? width : "unset",
         padding: padding ? padding : 0,
         margin: margin ? margin : 0,
-        fontSize: fontSize ? fontSize : 16,
+        fontSize: fontSize ? fontSize : "1rem",
         color: color ? color : "#2b96d9",
         backgroundColor: backgroundColor ? backgroundColor : "transparent",
         border: `1px solid ${borderColor ? borderColor : "#2b96d9"}`,

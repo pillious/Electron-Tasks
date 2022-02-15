@@ -15,13 +15,18 @@ const TaskList: React.FC = () => {
         listItems = (
             <Fragment>
                 {tasks.map((item) => (
-                    <Task key={item.id} id={item.id} title={item.title} />
+                    <Task
+                        key={item.id}
+                        id={item.id}
+                        title={item.title}
+                        description={item.notes}
+                    />
                 ))}
             </Fragment>
         );
     }
 
-    const btnStyles = { height: 32, width: 100, fontSize: 16, borderRadius: 8 };
+    const btnStyles = {padding: "4px 12px", borderRadius: 8 };
 
     const modalRef = useRef(null);
 
@@ -29,11 +34,6 @@ const TaskList: React.FC = () => {
     const closeModal: () => {} = modalRef.current
         ? modalRef.current.close
         : null;
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        // TODO: handle add task form submut.
-    };
 
     return (
         <section className={classes.list_wrapper}>
@@ -44,7 +44,10 @@ const TaskList: React.FC = () => {
             </div>
             <ul className={classes.list}>{listItems}</ul>
             <Modal ref={modalRef} width={400} title="Add Task">
-                <NewTaskModalContent closeModal={closeModal} listId={activeListId}/>
+                <NewTaskModalContent
+                    closeModal={closeModal}
+                    listId={activeListId}
+                />
             </Modal>
         </section>
     );

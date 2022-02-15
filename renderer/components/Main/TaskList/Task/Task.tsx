@@ -1,19 +1,15 @@
 import { useState } from "react";
 import classes from "./Task.module.css";
-import TaskForm from "./TaskForm";
+import TaskBody from "./TaskBody";
 import Checkbox from "./Checkbox";
 
-const Task: React.FC<{ id: string; title: string }> = (props) => {
-    const [isActive, setIsActive] = useState(false);
-
-    const handleClick = () => {
-        setIsActive(true);
-    };
-
+const Task: React.FC<{ id: string; title: string; description: string }> = (
+    props
+) => {
     return (
-        <li className={classes.listitem} onClick={handleClick}>
+        <li className={classes.listitem}>
             <Checkbox />
-            <TaskForm title={props.title} isActive={isActive} />
+            <TaskBody title={props.title} description={props.description} />
         </li>
     );
 };

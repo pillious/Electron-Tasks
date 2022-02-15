@@ -4,7 +4,8 @@
 
 .list {
     list-style: none;
-    width: 256px;
+    /* maintain min of 16px margin on right. */
+    width: min(100% - 16px, 500px);
 }
 
 .btn_wrapper {

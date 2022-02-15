@@ -1,0 +1,32 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+}
+
+.title {
+    /* The height of the checkbox */
+    min-height: 30px;
+    overflow: hidden;
+    overflow-wrap: break-word;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* number of lines to show */
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.description {
+    font-size: 0.9rem;
+    padding-left: 12px;
+    color: rgba(0, 0, 0, 0.75);
+    /* subtract the padding-left from width */
+    width: calc(100% - 12px);
+    overflow: hidden;
+    overflow-wrap: break-word;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* number of lines to show */
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
