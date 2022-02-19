@@ -5,14 +5,15 @@ import ModalButtonGroup from "../../UI/ModalButtonGroup";
 import classes from "./NewTaskModalContent.module.css";
 
 const NewTaskModalContent: React.FC<{
+    closeModal: () => {};
+    isNewTask: boolean;
+    listId: string;
+    taskId?: string;
     inputValues?: {
         title: string;
         description?: string;
         due?: Date;
     };
-    isNewTask: boolean;
-    closeModal: () => {};
-    listId: string;
 }> = (props) => {
     let defaultValues = {
         title: "",
@@ -56,7 +57,7 @@ const NewTaskModalContent: React.FC<{
         if (
             nameInputRef.current &&
             nameInputRef.current.value &&
-            isTaskEdited
+            isTaskEdited()
         ) {
             dispatch(
                 createTask(
@@ -66,7 +67,8 @@ const NewTaskModalContent: React.FC<{
                     descriptionInputRef.current.value,
                     dateInputRef.current.value
                         ? new Date(dateInputRef.current.value).toISOString()
-                        : null
+                        : null,
+                    props.taskId
                 )
             );
 
@@ -74,7 +76,7 @@ const NewTaskModalContent: React.FC<{
             descriptionInputRef.current.value = "";
             dateInputRef.current.value = "";
         } else {
-            console.log("TODO: New task must have a title.");
+            console.log("TODO: Dispatch create task failed.");
         }
         props.closeModal();
     };

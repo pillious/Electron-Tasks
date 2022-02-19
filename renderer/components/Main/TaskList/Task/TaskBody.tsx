@@ -4,7 +4,8 @@ import NewTaskModalContent from "../NewTaskModalContent";
 import classes from "./TaskBody.module.css";
 
 const TaskBody: React.FC<{
-    id: string;
+    listId: string;
+    taskId: string;
     title: string;
     description: string | null;
     due: Date | null;
@@ -31,7 +32,8 @@ const TaskBody: React.FC<{
                         ...(props.due && { due: props.due }),
                     }}
                     closeModal={closeModal}
-                    listId={props.id}
+                    listId={props.listId}
+                    taskId={props.taskId}
                     isNewTask={false}
                 />
             </Modal>

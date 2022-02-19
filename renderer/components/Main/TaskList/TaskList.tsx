@@ -17,7 +17,8 @@ const TaskList: React.FC = () => {
                 {tasks.map((item) => (
                     <Task
                         key={item.id}
-                        id={item.id}
+                        listId={activeListId}
+                        taskId={item.id}
                         title={item.title}
                         description={item.notes ? item.notes : null}
                         due={item.due ? new Date(item.due) : null}

@@ -3,7 +3,8 @@ import TaskBody from "./TaskBody";
 import Checkbox from "./Checkbox";
 
 const Task: React.FC<{
-    id: string;
+    listId: string;
+    taskId: string;
     title: string;
     description: string | null;
     due: Date | null;
@@ -12,7 +13,8 @@ const Task: React.FC<{
         <li className={classes.listitem} >
             <Checkbox />
             <TaskBody
-                id={props.id}
+                listId={props.listId}
+                taskId={props.taskId}
                 title={props.title}
                 description={props.description}
                 due={props.due}

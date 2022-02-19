@@ -31,9 +31,8 @@ export const getAllLists = () => {
 export const getListTasks = (id: string) => {
     return async (dispatch: AppDispatch) => {
         const resp = await gapi.client.tasks.tasks.list({ tasklist: id });
-        const tasks: gapi.client.tasks.Task[] = resp.result.items;
-
         console.log(resp);
+        const tasks: gapi.client.tasks.Task[] = resp.result.items;
 
         if (tasks && tasks.length > 0) {
             dispatch(dataActions.replaceAllActiveTasks(tasks));
@@ -72,7 +71,8 @@ export const createTask = (
     listId: string,
     title: string,
     description?: string,
-    date?: string
+    date?: string,
+    taskId?: string
 ) => {
     return async (dispatch: AppDispatch) => {
         try {
@@ -81,6 +81,7 @@ export const createTask = (
 
             let resp;
             if (isNewTask) {
+                // Creates a new task
                 resp = await gapi.client.tasks.tasks.insert({
                     tasklist: listId,
                     resource: {
@@ -89,16 +90,40 @@ export const createTask = (
                         ...(date && { due: date }),
                     },
                 });
+                dispatch(dataActions.addTask(resp.result));
             } else {
-                // TODO: Update existing task
-                console.log(listId, title, description, date);
-                // resp = await gapi.client.tasks.tasks.update({
-                //     tasklist: listId
-                // })
+                /**
+                 * Updates existing task
+                 * Unable to update task directly. gapi doesn't return the update versions of the tasks.
+                 * Must delete old version of task, then insert updated version of task.
+                 */
+                resp = await gapi.client.tasks.tasks.get({
+                    tasklist: listId,
+                    task: taskId,
+                });
+                let task = {
+                    ...resp.result,
+                    ...(title && { title: title }),
+                    ...(description && { notes: description }),
+                    ...(date && { due: date }),
+                };
+                await gapi.client.tasks.tasks.delete({
+                    tasklist: listId,
+                    task: taskId,
+                });
+                resp = await gapi.client.tasks.tasks.insert({
+                    tasklist: listId,
+                    resource: task,
+                });
+                dispatch(
+                    dataActions.updateTask({
+                        taskId: taskId,
+                        task: resp.result,
+                    })
+                );
             }
-            // dispatch(dataActions.addTask(resp.result));
         } catch (err) {
-            console.log("Create new task failed");
+            console.log("Create/Update task failed");
             console.log(err);
         }
     };
