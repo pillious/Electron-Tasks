@@ -11,11 +11,6 @@ const TaskBody: React.FC<{
 }> = (props) => {
     const modalRef = useRef(null);
 
-    // const openModal: () => {} = modalRef.current ? modalRef.current.open : null;
-    // const closeModal: () => {} = modalRef.current
-    //     ? modalRef.current.close
-    //     : null;
-
     const [openModal, setOpenModal] = useState(null);
     const [closeModal, setCloseModal] = useState(null);
 
