@@ -1,4 +1,4 @@
-import { Fragment, useRef } from "react";
+import { Fragment, useRef, useEffect, useState } from "react";
 import { useAppSelector } from "../../../hooks/useAppSelector";
 import Modal from "../../UI/Modal";
 import NewListButton from "../../UI/NewListButton";
@@ -19,21 +19,25 @@ const TaskList: React.FC = () => {
                         key={item.id}
                         id={item.id}
                         title={item.title}
-                        description={item.notes}
+                        description={item.notes ? item.notes : null}
+                        due={item.due ? new Date(item.due) : null}
                     />
                 ))}
             </Fragment>
         );
     }
 
-    const btnStyles = {padding: "4px 12px", borderRadius: 8 };
+    const btnStyles = { padding: "4px 12px", borderRadius: 8 };
 
     const modalRef = useRef(null);
 
-    const openModal: () => {} = modalRef.current ? modalRef.current.open : null;
-    const closeModal: () => {} = modalRef.current
-        ? modalRef.current.close
-        : null;
+    const [openModal, setOpenModal] = useState(null);
+    const [closeModal, setCloseModal] = useState(null);
+
+    useEffect(() => {
+        setOpenModal(() => modalRef.current.open);
+        setCloseModal(() => modalRef.current.close);
+    }, [modalRef])
 
     return (
         <section className={classes.list_wrapper}>
@@ -42,11 +46,15 @@ const TaskList: React.FC = () => {
                     <span>Add Task</span>
                 </NewListButton>
             </div>
+            {(!listItems || listItems.length == 0) && (
+                <p className={classes.completed}>All tasks completed!</p>
+            )}
             <ul className={classes.list}>{listItems}</ul>
             <Modal ref={modalRef} width={400} title="Add Task">
                 <NewTaskModalContent
                     closeModal={closeModal}
                     listId={activeListId}
+                    isNewTask
                 />
             </Modal>
         </section>

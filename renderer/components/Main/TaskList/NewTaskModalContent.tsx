@@ -5,9 +5,33 @@ import ModalButtonGroup from "../../UI/ModalButtonGroup";
 import classes from "./NewTaskModalContent.module.css";
 
 const NewTaskModalContent: React.FC<{
+    inputValues?: {
+        title: string;
+        description?: string;
+        due?: Date;
+    };
+    isNewTask: boolean;
     closeModal: () => {};
     listId: string;
 }> = (props) => {
+    let defaultValues = {
+        title: "",
+        description: "",
+        due: null,
+    };
+    if (!props.isNewTask && props.inputValues) {
+        defaultValues = {
+            ...defaultValues,
+            ...(props.inputValues.title && { title: props.inputValues.title }),
+            ...(props.inputValues.description && {
+                description: props.inputValues.description,
+            }),
+            ...(props.inputValues.due && {
+                due: props.inputValues.due.toLocaleDateString("en-CA"),
+            }),
+        };
+    }
+
     const nameInputRef = useRef(null);
     const descriptionInputRef = useRef(null);
     const dateInputRef = useRef(null);
@@ -15,10 +39,28 @@ const NewTaskModalContent: React.FC<{
     const dispatch = useAppDispatch();
 
     const submitHandler = (event) => {
+        const isTaskEdited = () => {
+            const x =
+                defaultValues.title != nameInputRef.current.value.trim() ||
+                defaultValues.description !=
+                    descriptionInputRef.current.value.trim() ||
+                (!defaultValues.due &&
+                    dateInputRef.current.value.trim() === "") ||
+                defaultValues.due != dateInputRef.current.value;
+
+            console.log(x);
+            return x;
+        };
+
         event.preventDefault();
-        if (nameInputRef.current && nameInputRef.current.value) {
+        if (
+            nameInputRef.current &&
+            nameInputRef.current.value &&
+            isTaskEdited
+        ) {
             dispatch(
                 createTask(
+                    props.isNewTask,
                     props.listId,
                     nameInputRef.current.value,
                     descriptionInputRef.current.value,
@@ -31,21 +73,21 @@ const NewTaskModalContent: React.FC<{
             nameInputRef.current.value = "";
             descriptionInputRef.current.value = "";
             dateInputRef.current.value = "";
-            
-            props.closeModal();
         } else {
             console.log("TODO: New task must have a title.");
         }
+        props.closeModal();
     };
 
     return (
         <form className={classes.form_control} onSubmit={submitHandler}>
-            <label htmlFor="name">List Name:</label>
+            <label htmlFor="name">Task Name:</label>
             <input
                 name="name"
                 type="text"
                 placeholder="Name"
                 ref={nameInputRef}
+                defaultValue={defaultValues.title}
             />
 
             <label htmlFor="description">Description:</label>
@@ -53,12 +95,21 @@ const NewTaskModalContent: React.FC<{
                 placeholder="Description"
                 name="description"
                 ref={descriptionInputRef}
+                defaultValue={defaultValues.description}
             />
 
-            <label htmlFor="date">Date:</label>
-            <input type="date" name="date" ref={dateInputRef} />
+            <label htmlFor="due">Date:</label>
+            <input
+                type="date"
+                name="due"
+                ref={dateInputRef}
+                defaultValue={defaultValues.due}
+            />
 
-            <ModalButtonGroup onCancel={props.closeModal} />
+            <ModalButtonGroup
+                onCancel={props.closeModal}
+                submitButtonLabel={props.isNewTask ? "Create" : "Update"}
+            />
         </form>
     );
 };

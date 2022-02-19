@@ -1,12 +1,63 @@
+import { Fragment, useEffect, useRef, useState } from "react";
+import Modal from "../../../UI/Modal";
+import NewTaskModalContent from "../NewTaskModalContent";
 import classes from "./TaskBody.module.css";
 
-const TaskBody: React.FC<{ title: string; description: string }> = (props) => {
+const TaskBody: React.FC<{
+    id: string;
+    title: string;
+    description: string | null;
+    due: Date | null;
+}> = (props) => {
+    const modalRef = useRef(null);
+
+    // const openModal: () => {} = modalRef.current ? modalRef.current.open : null;
+    // const closeModal: () => {} = modalRef.current
+    //     ? modalRef.current.close
+    //     : null;
+
+    const [openModal, setOpenModal] = useState(null);
+    const [closeModal, setCloseModal] = useState(null);
+
+    useEffect(() => {
+        setOpenModal(() => modalRef.current.open);
+        setCloseModal(() => modalRef.current.close);
+    }, [modalRef])
+
     return (
-        <div className={classes.wrapper}>
-            <p className={classes.title}>{props.title}</p>
-            <p className={classes.description}>{props.description}</p>
-            <p className={classes.due}>10/06/22, Repeat</p>
-        </div>
+        <Fragment>
+            <Modal ref={modalRef} width={400} title="Add Task">
+                <NewTaskModalContent
+                    inputValues={{
+                        title: props.title,
+                        ...(props.description && {
+                            description: props.description,
+                        }),
+                        ...(props.due && { due: props.due }),
+                    }}
+                    closeModal={closeModal}
+                    listId={props.id}
+                    isNewTask={false}
+                />
+            </Modal>
+
+            <div className={classes.wrapper} onClick={openModal}>
+                <p className={classes.title}>{props.title}</p>
+                {props.due && (
+                    <p className={classes.due}>
+                        {props.due.toLocaleDateString(undefined, {
+                            weekday: "short",
+                            month: "2-digit",
+                            day: "2-digit",
+                        })}
+                    </p>
+                )}
+                {/* <p className={classes.due}>10/06/22, Repeat</p> */}
+                {props.description && props.description.trim() !== "" && (
+                    <p className={classes.description}>{props.description}</p>
+                )}
+            </div>
+        </Fragment>
     );
 };
 

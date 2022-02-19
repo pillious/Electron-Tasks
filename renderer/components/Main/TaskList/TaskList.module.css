@@ -11,3 +11,9 @@
 .btn_wrapper {
     padding-bottom: 8px;
 }
+
+.completed {
+    padding-top: 16px;
+    font-size: 1.2rem;
+
+}

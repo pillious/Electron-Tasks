@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 import Modal from "../UI/Modal";
 import Footer from "./Footer";
 import Header from "./Header";
@@ -9,10 +9,13 @@ import TaskLists from "./TaskListButtonGroup/TaskListButtonGroup";
 const Sidebar: React.FC = () => {
     const modalRef = useRef(null);
 
-    const openModal: () => {} = modalRef.current ? modalRef.current.open : null;
-    const closeModal: () => {} = modalRef.current
-        ? modalRef.current.close
-        : null;
+    const [openModal, setOpenModal] = useState(null);
+    const [closeModal, setCloseModal] = useState(null);
+
+    useEffect(() => {
+        setOpenModal(() => modalRef.current.open);
+        setCloseModal(() => modalRef.current.close);
+    }, [modalRef])
 
     return (
         <aside className={classes.sidebar}>

@@ -68,6 +68,7 @@ export const createList = (title: string) => {
  * Google API doesn't accept a time, only date.
  */
 export const createTask = (
+    isNewTask: boolean,
     listId: string,
     title: string,
     description?: string,
@@ -78,15 +79,24 @@ export const createTask = (
             if (!listId || !title)
                 throw new Error("listId & title must be specified.");
 
-            const resp = await gapi.client.tasks.tasks.insert({
-                tasklist: listId,
-                resource: {
-                    title: title,
-                    ...(description && { notes: description }),
-                    ...(date && { due: date }),
-                },
-            });
-            dispatch(dataActions.addTask(resp.result));
+            let resp;
+            if (isNewTask) {
+                resp = await gapi.client.tasks.tasks.insert({
+                    tasklist: listId,
+                    resource: {
+                        title: title,
+                        ...(description && { notes: description }),
+                        ...(date && { due: date }),
+                    },
+                });
+            } else {
+                // TODO: Update existing task
+                console.log(listId, title, description, date);
+                // resp = await gapi.client.tasks.tasks.update({
+                //     tasklist: listId
+                // })
+            }
+            // dispatch(dataActions.addTask(resp.result));
         } catch (err) {
             console.log("Create new task failed");
             console.log(err);

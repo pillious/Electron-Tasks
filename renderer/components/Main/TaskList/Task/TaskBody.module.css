@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: column;
     max-width: 100%;
+    cursor: pointer;
 }
 
 .title {
@@ -18,10 +19,9 @@
 
 .description {
     font-size: 0.9rem;
-    padding-left: 12px;
+    padding-top: 4px;
     color: rgba(0, 0, 0, 0.75);
-    /* subtract the padding-left from width */
-    width: calc(100% - 12px);
+    width: 100%;
     overflow: hidden;
     overflow-wrap: break-word;
     text-overflow: ellipsis;
@@ -29,4 +29,14 @@
     -webkit-line-clamp: 3; /* number of lines to show */
     line-clamp: 3;
     -webkit-box-orient: vertical;
+}
+
+.due {
+    width: 100px;
+    border: 1px solid #686868;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    color: rgba(0, 0, 0, 0.75);
+    padding: 2px;
+    text-align: center;
 }
