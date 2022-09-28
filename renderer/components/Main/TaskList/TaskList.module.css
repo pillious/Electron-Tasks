@@ -13,7 +13,6 @@
 }
 
 .completed {
-    padding-top: 16px;
+    padding: 16px 0 0 8px;
     font-size: 1.2rem;
-
 }

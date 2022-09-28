@@ -41,16 +41,14 @@ const NewTaskModalContent: React.FC<{
 
     const submitHandler = (event) => {
         const isTaskEdited = () => {
-            const x =
+            return (
                 defaultValues.title != nameInputRef.current.value.trim() ||
                 defaultValues.description !=
                     descriptionInputRef.current.value.trim() ||
                 (!defaultValues.due &&
                     dateInputRef.current.value.trim() === "") ||
-                defaultValues.due != dateInputRef.current.value;
-
-            console.log(x);
-            return x;
+                defaultValues.due != dateInputRef.current.value
+            );
         };
 
         event.preventDefault();

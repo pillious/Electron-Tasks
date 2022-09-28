@@ -12,9 +12,13 @@ const TaskList: React.FC = () => {
 
     let listItems;
     if (tasks && tasks.length > 0) {
+        const sortedTasks = [...tasks].sort((first, second) => parseInt(first.position) - parseInt(second.position));
+        console.log(tasks);
+        console.log(sortedTasks);
+
         listItems = (
             <Fragment>
-                {tasks.map((item) => (
+                {sortedTasks.map((item) => (
                     <Task
                         key={item.id}
                         listId={activeListId}

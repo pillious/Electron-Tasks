@@ -101,26 +101,31 @@ export const createTask = (
                     tasklist: listId,
                     task: taskId,
                 });
+                console.log(resp);
                 let task = {
                     ...resp.result,
                     ...(title && { title: title }),
                     ...(description && { notes: description }),
                     ...(date && { due: date }),
                 };
-                await gapi.client.tasks.tasks.delete({
+                console.log(task);
+                console.log(listId);
+                console.log(taskId);
+                let x = await gapi.client.tasks.tasks.delete({
                     tasklist: listId,
                     task: taskId,
                 });
-                resp = await gapi.client.tasks.tasks.insert({
-                    tasklist: listId,
-                    resource: task,
-                });
-                dispatch(
-                    dataActions.updateTask({
-                        taskId: taskId,
-                        task: resp.result,
-                    })
-                );
+                console.log(x);
+                // resp = await gapi.client.tasks.tasks.insert({
+                //     tasklist: listId,
+                //     resource: task,
+                // });
+                // dispatch(
+                //     dataActions.updateTask({
+                //         taskId: taskId,
+                //         task: resp.result,
+                //     })
+                // );
             }
         } catch (err) {
             console.log("Create/Update task failed");

@@ -45,7 +45,7 @@ const Header: React.FC = () => {
 
     return (
         <section className={classes.header}>
-            <p>Active List: {activeListTitle}</p>
+            <p>{activeListTitle}</p>
             {/* TODO: add Sign out dropdown */}
             <button
                 onClick={clickHandler}
