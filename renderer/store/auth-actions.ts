@@ -1,6 +1,6 @@
+import { getToken, hasValidToken, initClient, loadGisClient, revokeToken } from '../helpers/auth';
 import { AppDispatch } from '../store/index';
 import { authActions } from './auth-slice';
-import { initClient } from '../helpers/auth';
 
 /***
  * Action Creators
@@ -12,64 +12,49 @@ export const authenticate = () => {
     return async (dispatch: AppDispatch) => {
         // Initalizes the google auth2 client.
         try {
-            // let GoogleAuth: gapi.auth2.GoogleAuth = await initClient();
             await initClient();
-            const GoogleAuth: gapi.auth2.GoogleAuth =
-                gapi.auth2.getAuthInstance();
+            await loadGisClient();
 
-            if (GoogleAuth) {
-                // Attach a listner to listen for signed in state updates
-                GoogleAuth.isSignedIn.listen((isSignedIn: boolean) =>
-                    signinStatusListener(isSignedIn, dispatch)
-                );
-
-                const isSignedIn = GoogleAuth.isSignedIn.get();
-                console.log(`isAuthenticated => ${isSignedIn}`);
-                if (isSignedIn) {
-                    // auto login succeeded.
-                    dispatch(authActions.isAuthenticated(true));
-                } else {
-                    // auto login failed, attempt signin through popup
-                    await signIn(dispatch);
-                }
-            } else {
-                // Both auto login and signin failed (should never reach this point).
-                throw new Error('Something went wrong! :(');
+            if (!hasValidToken()) {
+                console.log("Invalid token. Generating a new token...");
+                await getToken();
+                console.log(gapi.client.getToken());
             }
+            else {
+                console.log("Valid token!");
+                console.log(gapi.client.getToken());
+            }
+
+
+            dispatch(authActions.isAuthenticated(hasValidToken()));
+            if (!hasValidToken) {
+                throw new Error("Still invalid token after retry.");
+            }
+
+            // gapi.client.tasks.tasklists.list()
+            //     .then((resp) => console.log(resp))
+            //     .catch(err => getToken(err))
+            //     .then(retry => gapi.client.tasks.tasklists.list())
+            //     .then(calendarAPIResponse => console.log(JSON.stringify(calendarAPIResponse)))
+            //     .catch(err  => console.log(err));
         } catch (err: any) {
+            console.error(err);
             dispatch(authActions.isAuthenticated(false));
-            dispatch(
-                authActions.updateAuthErrorMsg('Something went wrong! :(')
-            );
+            dispatch(authActions.updateAuthErrorMsg('Something went wrong! :('));
         }
     };
 };
 
-// Sign in the user using the Google oAuth popup (permissions are accepted/denied in popup).
-const signIn = async (dispatch: AppDispatch) => {
-    const GoogleAuth: gapi.auth2.GoogleAuth = gapi.auth2.getAuthInstance();
 
-    try {
-        // await GoogleAuth.signIn();
-        await GoogleAuth.signIn({ux_mode: 'redirect'})
-        dispatch(authActions.isAuthenticated(true));
-    } catch (err: any) {
-        console.log(err);
-        throw new Error(err);
-    }
-};
-
-// Updates redux store with the signed in state when state changes.
-const signinStatusListener = (isSignedIn: boolean, dispatch: AppDispatch) => {
-    console.log(`Signin status updated => ${isSignedIn}`);
-    dispatch(authActions.isAuthenticated(isSignedIn));
+export const signIn = async () => {
+    authenticate();
 };
 
 export const signOut = () => {
     return (dispatch: AppDispatch) => {
         try {
-            gapi.auth2.getAuthInstance().signOut();
-            // Sign in status will be updated by status listener.
+            revokeToken();
+            dispatch(authActions.isAuthenticated(false));
         } catch (err) {
             console.log(err);
         }

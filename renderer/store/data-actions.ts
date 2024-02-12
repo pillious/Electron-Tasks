@@ -1,5 +1,6 @@
-import { AppDispatch } from "../store/index";
-import { dataActions } from "./data-slice";
+import { getToken, hasValidToken } from '../helpers/auth';
+import { AppDispatch } from '../store/index';
+import { dataActions } from './data-slice';
 
 /***
  * Action Creators
@@ -8,6 +9,10 @@ import { dataActions } from "./data-slice";
 export const getAllLists = () => {
     return async (dispatch: AppDispatch) => {
         try {
+            if (!hasValidToken()) {
+                await getToken();
+            }
+
             const resp = await gapi.client.tasks.tasklists.list();
             let taskLists: gapi.client.tasks.TaskList[] = resp.result.items;
 
@@ -30,6 +35,10 @@ export const getAllLists = () => {
  */
 export const getListTasks = (id: string) => {
     return async (dispatch: AppDispatch) => {
+        if (!hasValidToken()) {
+            await getToken();
+        }
+
         const resp = await gapi.client.tasks.tasks.list({ tasklist: id });
         console.log(resp);
         const tasks: gapi.client.tasks.Task[] = resp.result.items;
@@ -45,6 +54,10 @@ export const getListTasks = (id: string) => {
 export const createList = (title: string) => {
     return async (dispatch: AppDispatch) => {
         try {
+            if (!hasValidToken()) {
+                await getToken();
+            }
+
             // Creates the new list.
             const resp = await gapi.client.tasks.tasklists.insert({
                 resource: { title: title },
@@ -56,7 +69,7 @@ export const createList = (title: string) => {
             // Empty the current list of tasks.
             dispatch(dataActions.replaceAllActiveTasks([]));
         } catch (err) {
-            console.log("Create new list failed.");
+            console.log('Create new list failed.');
             console.log(err);
         }
     };
@@ -76,8 +89,11 @@ export const createTask = (
 ) => {
     return async (dispatch: AppDispatch) => {
         try {
-            if (!listId || !title)
-                throw new Error("listId & title must be specified.");
+            if (!hasValidToken()) {
+                await getToken();
+            }
+
+            if (!listId || !title) throw new Error('listId & title must be specified.');
 
             let resp;
             if (isNewTask) {
@@ -128,7 +144,7 @@ export const createTask = (
                 // );
             }
         } catch (err) {
-            console.log("Create/Update task failed");
+            console.log('Create/Update task failed');
             console.log(err);
         }
     };

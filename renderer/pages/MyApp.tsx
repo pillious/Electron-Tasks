@@ -5,7 +5,7 @@ import { Fragment } from 'react';
 import { Provider } from 'react-redux';
 import store from '../store/index';
 
-function MyApp({ Component, pageProps }: AppProps) {
+export function MyApp({ Component, pageProps }: AppProps) {
     return (
         <Fragment>
             <style jsx global>{`
@@ -27,14 +27,13 @@ function MyApp({ Component, pageProps }: AppProps) {
                 <meta name='viewport' content='width=device-width' />
                 <meta
                     httpEquiv='Content-Security-Policy'
-                    content="script-src 'self' 'unsafe-eval' https://apis.google.com https://accounts.google.com"
-                />
+                    content="script-src 'self' 'unsafe-eval' https://apis.google.com https://accounts.google.com" />
                 <link
                     href='https://fonts.googleapis.com/css2?family=Lato&display=swap'
                     rel='stylesheet'
                 ></link>
             </Head>
-            <Script src='https://apis.google.com/js/api.js' strategy='beforeInteractive' />
+            {/* <Script src='https://apis.google.com/js/api.js' strategy='beforeInteractive' /> */}
             <Script
                 src='https://accounts.google.com/gsi/client'
                 strategy='beforeInteractive'
@@ -45,5 +44,3 @@ function MyApp({ Component, pageProps }: AppProps) {
         </Fragment>
     );
 }
-
-export default MyApp;

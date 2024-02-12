@@ -10,7 +10,7 @@ import classes from './index.module.css';
 const IndexPage: React.FC = () => {
     const dispatch = useAppDispatch();
     const isAuthenticated = useAppSelector((state) => state.auth.authenticated);
-
+    console.log("loaded")
     // Authenticate user on load.
     useEffect(() => {
         dispatch(authenticate());

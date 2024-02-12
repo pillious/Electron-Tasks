@@ -31,17 +31,17 @@ const Header: React.FC = () => {
         backgroundImage: string;
     };
 
-    if (isAuthenticated) {
-        let profile = gapi.auth2
-            .getAuthInstance()
-            .currentUser.get()
-            .getBasicProfile();
-        profileImg = profile.getImageUrl();
+    // if (isAuthenticated) {
+    //     let profile = gapi.auth2
+    //         .getAuthInstance()
+    //         .currentUser.get()
+    //         .getBasicProfile();
+    //     profileImg = profile.getImageUrl();
 
-        btnStyles = {
-            backgroundImage: `url(${profileImg})`,
-        };
-    }
+    //     btnStyles = {
+    //         backgroundImage: `url(${profileImg})`,
+    //     };
+    // }
 
     return (
         <section className={classes.header}>
