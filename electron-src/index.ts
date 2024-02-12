@@ -1,11 +1,14 @@
 // Native
-import { join } from 'path';
-import { format } from 'url';
+import { dirname, join } from 'path';
+import { fileURLToPath, format } from 'url';
 
 // Packages
 import { BrowserWindow, app } from 'electron';
 import isDev from 'electron-is-dev';
-import prepareNext from 'electron-next';
+import prepareNext from './electron-next/index.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 // Prepare the renderer once the app is ready
 app.on('ready', async () => {
