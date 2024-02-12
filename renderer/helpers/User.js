@@ -1,3 +1,4 @@
+// Not used.
 export default class User {
     // An array of TaskList objects
     static lists = [];

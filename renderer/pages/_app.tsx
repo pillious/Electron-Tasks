@@ -29,10 +29,6 @@ function MyApp({ Component, pageProps }: AppProps) {
                     httpEquiv='Content-Security-Policy'
                     content="script-src 'self' 'unsafe-eval' https://apis.google.com https://accounts.google.com"
                 />
-                <link
-                    href='https://fonts.googleapis.com/css2?family=Lato&display=swap'
-                    rel='stylesheet'
-                ></link>
             </Head>
             <Script src='https://apis.google.com/js/api.js' strategy='beforeInteractive' />
             <Script
