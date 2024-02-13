@@ -1,38 +1,36 @@
-import { Fragment, useRef, useEffect, useState } from "react";
-import { useAppSelector } from "../../../hooks/useAppSelector";
-import Modal from "../../UI/Modal";
-import NewListButton from "../../UI/NewListButton";
-import NewTaskModalContent from "./NewTaskModalContent";
-import Task from "./Task/Task";
-import classes from "./TaskList.module.css";
+import { Fragment, useEffect, useRef, useState } from 'react';
+import { useAppSelector } from '../../../hooks/useAppSelector';
+import Modal from '../../UI/Modal';
+import NewListButton from '../../UI/NewListButton';
+import NewTaskModalContent from './NewTaskModalContent';
+import Task from './Task/Task';
+import classes from './TaskList.module.css';
 
 const TaskList: React.FC = () => {
     const tasks = useAppSelector((state) => state.data.activeTasks);
     const activeListId = useAppSelector((state) => state.data.activeListId);
 
-    let listItems;
+    let listItems: React.ReactNode[];
     if (tasks && tasks.length > 0) {
-        const sortedTasks = [...tasks].sort((first, second) => parseInt(first.position) - parseInt(second.position));
+        const sortedTasks = [...tasks].sort(
+            (first, second) => parseInt(first.position) - parseInt(second.position)
+        );
         console.log(tasks);
         console.log(sortedTasks);
 
-        listItems = (
-            <Fragment>
-                {sortedTasks.map((item) => (
-                    <Task
-                        key={item.id}
-                        listId={activeListId}
-                        taskId={item.id}
-                        title={item.title}
-                        description={item.notes ? item.notes : null}
-                        due={item.due ? new Date(item.due) : null}
-                    />
-                ))}
-            </Fragment>
-        );
+        listItems = sortedTasks.map((item) => (
+            <Task
+                key={item.id}
+                listId={activeListId}
+                taskId={item.id}
+                title={item.title}
+                description={item.notes ? item.notes : null}
+                due={item.due ? new Date(item.due) : null}
+            />
+        ));
     }
 
-    const btnStyles = { padding: "4px 12px", borderRadius: 8 };
+    const btnStyles = { padding: '4px 12px', borderRadius: 8 };
 
     const modalRef = useRef(null);
 
@@ -42,7 +40,7 @@ const TaskList: React.FC = () => {
     useEffect(() => {
         setOpenModal(() => modalRef.current.open);
         setCloseModal(() => modalRef.current.close);
-    }, [modalRef])
+    }, [modalRef]);
 
     return (
         <section className={classes.list_wrapper}>
@@ -55,12 +53,8 @@ const TaskList: React.FC = () => {
                 <p className={classes.completed}>All tasks completed!</p>
             )}
             <ul className={classes.list}>{listItems}</ul>
-            <Modal ref={modalRef} width={400} title="Add Task">
-                <NewTaskModalContent
-                    closeModal={closeModal}
-                    listId={activeListId}
-                    isNewTask
-                />
+            <Modal ref={modalRef} width={400} title='Add Task'>
+                <NewTaskModalContent closeModal={closeModal} listId={activeListId} isNewTask />
             </Modal>
         </section>
     );

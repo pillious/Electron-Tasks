@@ -14,6 +14,7 @@ interface Props {
         backgroundColor?: string;
     };
     onClick?: () => void | null;
+    children?: React.ReactNode;
 }
 
 const NewListButton: React.FC<Props> = (props) => {

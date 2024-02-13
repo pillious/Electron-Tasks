@@ -95,35 +95,28 @@ export const createTask = (
 
             if (!listId || !title) throw new Error('listId & title must be specified.');
 
-            let resp;
+            const task = {
+                title: title,
+                ...(description && { notes: description }),
+                ...(date && { due: date }),
+            };
+
+            let resp: gapi.client.Response<gapi.client.tasks.Task>;
             if (isNewTask) {
                 // Creates a new task
                 resp = await gapi.client.tasks.tasks.insert({
                     tasklist: listId,
-                    resource: {
-                        title: title,
-                        ...(description && { notes: description }),
-                        ...(date && { due: date }),
-                    },
+                    resource: task,
                 });
                 dispatch(dataActions.addTask(resp.result));
             } else {
                 /**
                  * Updates existing task
-                 * Unable to update task directly. gapi doesn't return the update versions of the tasks.
-                 * Must delete old version of task, then insert updated version of task.
+                 * Issue: if we use update(), the Etag of the taskList doesn't get updated, so we get stale data.
+                 * Issue link: https://issuetracker.google.com/issues/136123247
+                 * Workaround: delete old version of the task, then insert a new task with the new version of the task.
                  */
-                resp = await gapi.client.tasks.tasks.get({
-                    tasklist: listId,
-                    task: taskId,
-                });
-                console.log(resp);
-                let task = {
-                    ...resp.result,
-                    ...(title && { title: title }),
-                    ...(description && { notes: description }),
-                    ...(date && { due: date }),
-                };
+                task["id"] = taskId; // update requires an id in the resource.
                 console.log(task);
                 console.log(listId);
                 console.log(taskId);
@@ -132,16 +125,23 @@ export const createTask = (
                     task: taskId,
                 });
                 console.log(x);
-                // resp = await gapi.client.tasks.tasks.insert({
+                resp = await gapi.client.tasks.tasks.insert({
+                    tasklist: listId,
+                    resource: task,
+                });
+                console.log(resp);
+                // Ideally, we could just update (doesn't work)
+                // resp = await gapi.client.tasks.tasks.update({
+                //     task: taskId,
                 //     tasklist: listId,
-                //     resource: task,
-                // });
-                // dispatch(
-                //     dataActions.updateTask({
-                //         taskId: taskId,
-                //         task: resp.result,
-                //     })
-                // );
+                //     resource: task
+                // })
+                dispatch(
+                    dataActions.updateTask({
+                        taskId: taskId,
+                        task: resp.result,
+                    })
+                );
             }
         } catch (err) {
             console.log('Create/Update task failed');
