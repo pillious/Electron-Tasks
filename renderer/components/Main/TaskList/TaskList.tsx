@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
 import { useAppSelector } from '../../../hooks/useAppSelector';
+import { getListTasks } from '../../../store/data-actions';
 import { dataActions } from '../../../store/data-slice';
 import Modal from '../../UI/Modal';
 import NewListButton from '../../UI/NewListButton';
@@ -15,6 +16,10 @@ const TaskList: React.FC = () => {
     const undoAction = useAppSelector((state) => state.data.undoAction);
 
     const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        if (activeListId) dispatch(getListTasks(activeListId));
+    }, [activeListId, dispatch]);
 
     let listItems: React.ReactNode[];
     if (tasks && tasks.length > 0) {

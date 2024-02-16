@@ -45,6 +45,12 @@ export const updateList = async (
     return await gApiRequest(() => gapi.client.tasks.tasklists.patch(options));
 };
 
+export const deleteList = async (
+    options: Parameters<typeof gapi.client.tasks.tasklists.delete>[0]
+) => {
+    return await gApiRequest(() => gapi.client.tasks.tasklists.delete(options));
+};
+
 /*
  * Task operations
  */

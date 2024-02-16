@@ -54,6 +54,18 @@ export const createList = (title: string) => {
     };
 };
 
+export const deleteList = (listid: string) => {
+    return async (dispatch: AppDispatch) => {
+        try {
+            await gdata.deleteList({ tasklist: listid });
+            dispatch(dataActions.deleteList(listid));
+        } catch (err) {
+            console.log('Delete list failed.');
+            console.error(err);
+        }
+    };
+};
+
 /***
  * Date must be in RFC 3339 timestamp. (use .toISOString())
  * Google API doesn't accept a time, only date.

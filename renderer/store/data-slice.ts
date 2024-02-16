@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const initialState: {
     taskLists: gapi.client.tasks.TaskList[];
@@ -17,19 +17,16 @@ const initialState: {
 };
 
 const dataSlice = createSlice({
-    name: "data",
+    name: 'data',
     initialState: initialState,
     reducers: {
-        replaceAllLists(
-            state,
-            action: PayloadAction<gapi.client.tasks.TaskList[]>
-        ) {
+        replaceAllLists(state, action: PayloadAction<gapi.client.tasks.TaskList[]>) {
             state.taskLists = action.payload;
         },
         addList(state, action: PayloadAction<gapi.client.tasks.TaskList>) {
             state.taskLists.push(action.payload);
         },
-        changeListName(state, action: PayloadAction<{id: string, newName: string}>) {
+        changeListName(state, action: PayloadAction<{ id: string; newName: string }>) {
             const listToChangeIdx = state.taskLists.findIndex(
                 (list) => list.id === action.payload.id
             );
@@ -38,19 +35,14 @@ const dataSlice = createSlice({
             }
         },
         deleteList(state, action: PayloadAction<string>) {
-            const listToDeleteIdx = state.taskLists.findIndex(
-                (list) => list.id === action.payload
-            );
-            listToDeleteIdx !== -1 &&
-                state.taskLists.splice(listToDeleteIdx, 1); // .splice directly modifies the array & returns the removed list.
+            const listToDeleteIdx = state.taskLists.findIndex((list) => list.id === action.payload);
+            listToDeleteIdx !== -1 && state.taskLists.splice(listToDeleteIdx, 1);
+            state.activeListId = state.taskLists.length > 0 ? state.taskLists[0].id : null;
         },
         setActiveList(state, action: PayloadAction<string>) {
             state.activeListId = action.payload;
         },
-        replaceAllActiveTasks(
-            state,
-            action: PayloadAction<gapi.client.tasks.Task[]>
-        ) {
+        replaceAllActiveTasks(state, action: PayloadAction<gapi.client.tasks.Task[]>) {
             state.activeTasks = action.payload;
         },
         addTask(state, action: PayloadAction<gapi.client.tasks.Task>) {
@@ -75,8 +67,7 @@ const dataSlice = createSlice({
             const taskToDeleteIdx = state.activeTasks.findIndex(
                 (task) => task.id === action.payload
             );
-            taskToDeleteIdx !== -1 &&
-                state.activeTasks.splice(taskToDeleteIdx, 1);
+            taskToDeleteIdx !== -1 && state.activeTasks.splice(taskToDeleteIdx, 1);
         },
         updateIsLoading(state, action: PayloadAction<boolean>) {
             state.isLoading = action.payload;
@@ -84,7 +75,6 @@ const dataSlice = createSlice({
         setUndoFunction(state, action: PayloadAction<() => {} | null>) {
             state.undoAction = action.payload;
         },
-        
     },
 });
 
