@@ -53,7 +53,7 @@ Learning to use Google's APIs was extremely challenging. Many of the API feature
 -   [Next.js](https://nextjs.org/)
 -   [Electron](https://www.electronjs.org/)
 -   [Typescript](https://www.typescriptlang.org/)
--   [Google OAuth2](https://developers.google.com/identity)
+-   [Google Identity](https://developers.google.com/identity/oauth2/web/guides/overview)
 -   [Google Tasks API](https://developers.google.com/tasks)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
@@ -75,10 +75,11 @@ npm install npm@latest -g
 ### Setup
 
 1. Create a new project on the [Google Cloud Platform](https://console.developers.google.com/).
-2. Navigate to the project's Library tab, and enable Tasks API (not Cloud Tasks API).
-3. In the Credentials tab, create an API key AND a web application OAuth client ID.
-4. Inside your client ID settings, add `http://locahost:8000` to the authorized JavaScript origins and Authorized redirect URIs.
-5. Finally, Navigate to the OAuth consent screen. Besides filling out the required information, add the scope Tasks API (../auth/tasks).
+1. Navigate to the project's Library tab, and enable Tasks API (not Cloud Tasks API).
+1. Also enable the People API.
+1. In the Credentials tab, create an API key AND a web application OAuth client ID.
+1. Inside your client ID settings, add `http://locahost:8000` to the authorized JavaScript origins and Authorized redirect URIs.
+1. Finally, Navigate to the OAuth consent screen. Besides filling out the required information, add the scopes Tasks API & People API.
 
 ### Installation
 
