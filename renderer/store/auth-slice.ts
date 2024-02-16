@@ -3,9 +3,11 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 const initialState: {
     authenticated: boolean;
     authErrorMsg: string;
+    profileImg: string;
 } = {
     authenticated: false,
     authErrorMsg: '',
+    profileImg: '',
 };
 
 const authSlice = createSlice({
@@ -18,6 +20,9 @@ const authSlice = createSlice({
         updateAuthErrorMsg(state, action: PayloadAction<string>) {
             state.authErrorMsg = action.payload;
         },
+        updateProfileImg(state, action: PayloadAction<string>) {
+            state.profileImg = action.payload;
+        }
         // login(state) {},
         // logout(state) {},
     },

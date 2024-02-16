@@ -1,19 +1,21 @@
 import { getToken, hasValidToken } from './auth';
 
-const gTasksRequest = async <T,>(gtasksApiMethod: () => T): Promise<T> => {
+// Wrapper for all operations below. Handles access token validation.
+// If the API call fails due to invalid token, attempts to refresh token and retries the call once.
+const gApiRequest = async <T,>(func: () => T): Promise<T> => {
     if (!hasValidToken()) {
         await getToken();
     }
 
     try {
-        return gtasksApiMethod();
+        return func();
     } catch (err) {
         if (
             err.result.error.code == 401 ||
             (err.result.error.code == 403 && err.result.error.status == 'PERMISSION_DENIED')
         ) {
             await getToken();
-            return await gtasksApiMethod();
+            return await func();
         } else {
             throw new Error(err);
         }
@@ -23,9 +25,8 @@ const gTasksRequest = async <T,>(gtasksApiMethod: () => T): Promise<T> => {
 /*
  * Tasklist operations
  */
-
 export const getTasklists = async () => {
-    return await gTasksRequest(gapi.client.tasks.tasklists.list);
+    return await gApiRequest(gapi.client.tasks.tasklists.list);
 };
 
 export const createList = async (
@@ -33,7 +34,7 @@ export const createList = async (
         resource: gapi.client.tasks.TaskList;
     }
 ) => {
-    return await gTasksRequest(() => gapi.client.tasks.tasklists.insert(options));
+    return await gApiRequest(() => gapi.client.tasks.tasklists.insert(options));
 };
 
 export const updateList = async (
@@ -41,7 +42,7 @@ export const updateList = async (
         resource: gapi.client.tasks.TaskList;
     }
 ) => {
-    return await gTasksRequest(() => gapi.client.tasks.tasklists.patch(options));
+    return await gApiRequest(() => gapi.client.tasks.tasklists.patch(options));
 };
 
 /*
@@ -50,7 +51,7 @@ export const updateList = async (
 export const getTasksInList = async (
     options: Parameters<typeof gapi.client.tasks.tasks.list>[0]
 ) => {
-    return await gTasksRequest(() => gapi.client.tasks.tasks.list(options));
+    return await gApiRequest(() => gapi.client.tasks.tasks.list(options));
 };
 
 export const createTask = async (
@@ -58,7 +59,7 @@ export const createTask = async (
         resource: gapi.client.tasks.Task;
     }
 ) => {
-    return await gTasksRequest(() => gapi.client.tasks.tasks.insert(options));
+    return await gApiRequest(() => gapi.client.tasks.tasks.insert(options));
 };
 
 export const updateTask = async (
@@ -66,9 +67,24 @@ export const updateTask = async (
         resource: gapi.client.tasks.Task;
     }
 ) => {
-    return await gTasksRequest(() => gapi.client.tasks.tasks.patch(options));
+    return await gApiRequest(() => gapi.client.tasks.tasks.patch(options));
 };
 
 export const deleteTask = async (options: Parameters<typeof gapi.client.tasks.tasks.delete>[0]) => {
-    return await gTasksRequest(() => gapi.client.tasks.tasks.delete(options));
+    return await gApiRequest(() => gapi.client.tasks.tasks.delete(options));
+};
+
+/*
+ * Profile operations
+ */
+export const getProfilePicture = async () => {
+    return await gApiRequest(async () => {
+        const resp = await gApiRequest<gapi.client.Request<gapi.client.people.Person>>(() =>
+            gapi.client.request({
+                path: 'https://people.googleapis.com/v1/people/me?personFields=photos',
+            })
+        );
+
+        return resp.result.photos[0].url;
+    });
 };

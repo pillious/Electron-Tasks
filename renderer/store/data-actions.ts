@@ -1,6 +1,6 @@
-import { getToken, hasValidToken } from '../helpers/auth';
-import * as gtasks from '../helpers/gtasks';
+import * as gdata from '../helpers/gdata';
 import { AppDispatch } from '../store/index';
+import { authActions } from './auth-slice';
 import { dataActions } from './data-slice';
 
 /***
@@ -10,7 +10,7 @@ import { dataActions } from './data-slice';
 export const getAllLists = () => {
     return async (dispatch: AppDispatch) => {
         try {
-            const taskLists = (await gtasks.getTasklists()).result.items;
+            const taskLists = (await gdata.getTasklists()).result.items;
 
             if (taskLists && taskLists.length > 0) {
                 dispatch(dataActions.replaceAllLists(taskLists));
@@ -29,7 +29,7 @@ export const getAllLists = () => {
  */
 export const getListTasks = (id: string) => {
     return async (dispatch: AppDispatch) => {
-        const tasks = (await gtasks.getTasksInList({ tasklist: id })).result.items;
+        const tasks = (await gdata.getTasksInList({ tasklist: id })).result.items;
 
         if (tasks && tasks.length > 0) {
             dispatch(dataActions.replaceAllActiveTasks(tasks));
@@ -42,7 +42,7 @@ export const getListTasks = (id: string) => {
 export const createList = (title: string) => {
     return async (dispatch: AppDispatch) => {
         try {
-            const resp = (await gtasks.createList({ resource: { title: title } })).result;
+            const resp = (await gdata.createList({ resource: { title: title } })).result;
 
             dispatch(dataActions.addList(resp)); // Add the list to the global store.
             dispatch(dataActions.setActiveList(resp.id)); // Set the newly created list as the active list.
@@ -63,7 +63,7 @@ export const createTask = (tasklistId: string, task: gapi.client.tasks.Task) => 
         try {
             if (!tasklistId || !task.title) throw new Error('listId & title must be specified.');
 
-            const resp = (await gtasks.createTask({ tasklist: tasklistId, resource: task })).result;
+            const resp = (await gdata.createTask({ tasklist: tasklistId, resource: task })).result;
             dispatch(dataActions.addTask(resp));
         } catch (err) {
             console.log('Create task failed');
@@ -85,7 +85,7 @@ export const updateTask = (tasklistId: string, taskId: string, task: gapi.client
             if (!tasklistId || !taskId) throw new Error('listId & taskId must be specified.');
 
             const resp = (
-                await gtasks.updateTask({
+                await gdata.updateTask({
                     tasklist: tasklistId,
                     task: taskId,
                     resource: { ...task, id: taskId },
@@ -93,7 +93,7 @@ export const updateTask = (tasklistId: string, taskId: string, task: gapi.client
             ).result;
 
             // Force the tasklist's etag to change by updating the tasklist.
-            await gtasks.updateList({ tasklist: tasklistId, resource: { id: tasklistId } });
+            await gdata.updateList({ tasklist: tasklistId, resource: { id: tasklistId } });
 
             dispatch(dataActions.updateTask({ taskId: taskId, task: resp }));
         } catch (err) {
@@ -108,7 +108,7 @@ export const deleteTask = (tasklistId: string, taskId: string) => {
         try {
             if (!tasklistId || !taskId) throw new Error('listId & taskId must be specified.');
 
-            await gtasks.deleteTask({ tasklist: tasklistId, task: taskId });
+            await gdata.deleteTask({ tasklist: tasklistId, task: taskId });
             dispatch(dataActions.removeTask(taskId));
         } catch (err) {
             console.log('Delete task failed');

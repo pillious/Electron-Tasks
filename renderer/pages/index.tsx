@@ -1,16 +1,16 @@
-import { Fragment, useEffect } from 'react';
+import { useEffect } from 'react';
 import Main from '../components/Main/Main';
 import Sidebar from '../components/Sidebar/Sidebar';
 import { useAppDispatch } from '../hooks/useAppDispatch';
 import { useAppSelector } from '../hooks/useAppSelector';
-import { authenticate } from '../store/auth-actions';
+import { authenticate, getProfilePicture } from '../store/auth-actions';
 import { getAllLists } from '../store/data-actions';
 import classes from './index.module.css';
 
 const IndexPage: React.FC = () => {
     const dispatch = useAppDispatch();
     const isAuthenticated = useAppSelector((state) => state.auth.authenticated);
-    console.log("loaded")
+    console.log('loaded');
     // Authenticate user on load.
     useEffect(() => {
         dispatch(authenticate());
@@ -20,6 +20,7 @@ const IndexPage: React.FC = () => {
     useEffect(() => {
         if (isAuthenticated) {
             dispatch(getAllLists());
+            dispatch(getProfilePicture());
         }
     }, [isAuthenticated, dispatch]);
 

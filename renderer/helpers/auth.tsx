@@ -5,7 +5,7 @@ type GoogleTokenClientWithCallback = google.accounts.oauth2.TokenClient & {
 
 var tokenClient: google.accounts.oauth2.TokenClient;
 // var tokenClient;
-const SCOPE = 'https://www.googleapis.com/auth/tasks';
+const SCOPE = 'https://www.googleapis.com/auth/tasks https://www.googleapis.com/auth/userinfo.profile';
 const DISCOVERY_URL = 'https://www.googleapis.com/discovery/v1/apis/tasks/v1/rest';
 
 // Loads the gapi client, initializes the client, then loads the google tasks api.
@@ -21,7 +21,7 @@ export const initClient = async () => {
             // NOTE: OAuth2 'scope' and 'client_id' parameters have moved to initTokenClient().
         })
         .then(function () {
-            // Load the Calendar API discovery document.
+            // Load the Task API discovery document.
             gapi.client.load(DISCOVERY_URL);
         });
 

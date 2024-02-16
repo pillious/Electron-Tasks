@@ -1,4 +1,5 @@
 import { getToken, hasValidToken, initClient, loadGisClient, revokeToken } from '../helpers/auth';
+import * as gdata from '../helpers/gdata';
 import { AppDispatch } from '../store/index';
 import { authActions } from './auth-slice';
 
@@ -16,19 +17,17 @@ export const authenticate = () => {
             await loadGisClient();
 
             if (!hasValidToken()) {
-                console.log("Invalid token. Generating a new token...");
+                console.log('Invalid token. Generating a new token...');
                 await getToken();
                 console.log(gapi.client.getToken());
-            }
-            else {
-                console.log("Valid token!");
+            } else {
+                console.log('Valid token!');
                 console.log(gapi.client.getToken());
             }
-
 
             dispatch(authActions.isAuthenticated(hasValidToken()));
             if (!hasValidToken) {
-                throw new Error("Still invalid token after retry.");
+                throw new Error('Still invalid token after retry.');
             }
 
             // gapi.client.tasks.tasklists.list()
@@ -45,7 +44,6 @@ export const authenticate = () => {
     };
 };
 
-
 export const signIn = async () => {
     authenticate();
 };
@@ -55,8 +53,20 @@ export const signOut = () => {
         try {
             revokeToken();
             dispatch(authActions.isAuthenticated(false));
+            dispatch(authActions.updateProfileImg(''));
         } catch (err) {
             console.log(err);
+        }
+    };
+};
+
+export const getProfilePicture = () => {
+    return async (dispatch: AppDispatch) => {
+        try {
+            const url = await gdata.getProfilePicture();
+            dispatch(authActions.updateProfileImg(url));
+        } catch (err) {
+            console.error(err);
         }
     };
 };

@@ -6,12 +6,14 @@ const initialState: {
     activeTasks: gapi.client.tasks.Task[];
     isLoading: boolean;
     errorMsg: string | null;
+    undoAction: () => {} | null;
 } = {
     taskLists: [],
     activeListId: null,
     activeTasks: [],
     isLoading: false,
     errorMsg: null,
+    undoAction: null,
 };
 
 const dataSlice = createSlice({
@@ -26,6 +28,14 @@ const dataSlice = createSlice({
         },
         addList(state, action: PayloadAction<gapi.client.tasks.TaskList>) {
             state.taskLists.push(action.payload);
+        },
+        changeListName(state, action: PayloadAction<{id: string, newName: string}>) {
+            const listToChangeIdx = state.taskLists.findIndex(
+                (list) => list.id === action.payload.id
+            );
+            if (listToChangeIdx !== -1) {
+                state.taskLists[listToChangeIdx].title = action.payload.newName;
+            }
         },
         deleteList(state, action: PayloadAction<string>) {
             const listToDeleteIdx = state.taskLists.findIndex(
@@ -71,7 +81,10 @@ const dataSlice = createSlice({
         updateIsLoading(state, action: PayloadAction<boolean>) {
             state.isLoading = action.payload;
         },
-        // changeListName(state, action: PayloadAction<{id: string, newName: string}>) {},
+        setUndoFunction(state, action: PayloadAction<() => {} | null>) {
+            state.undoAction = action.payload;
+        },
+        
     },
 });
 

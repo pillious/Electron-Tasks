@@ -8,8 +8,22 @@
     width: calc(100% - 16px);
 }
 
-.btn_wrapper {
+.tool_bar_wrapper {
+    display: flex;
+    gap: 8px;
+    align-items: center;
     padding-bottom: 8px;
+}
+
+.refresh {
+    cursor: pointer;
+    border-radius: 100%;
+    padding: 4px;
+}
+
+.refresh:hover {
+    background-color: #eee;
+
 }
 
 .completed {

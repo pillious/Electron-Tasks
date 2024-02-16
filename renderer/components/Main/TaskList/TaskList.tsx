@@ -1,5 +1,8 @@
+import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
+import { useAppDispatch } from '../../../hooks/useAppDispatch';
 import { useAppSelector } from '../../../hooks/useAppSelector';
+import { dataActions } from '../../../store/data-slice';
 import Modal from '../../UI/Modal';
 import NewListButton from '../../UI/NewListButton';
 import NewTaskModalContent from './NewTaskModalContent';
@@ -9,6 +12,9 @@ import classes from './TaskList.module.css';
 const TaskList: React.FC = () => {
     const tasks = useAppSelector((state) => state.data.activeTasks);
     const activeListId = useAppSelector((state) => state.data.activeListId);
+    const undoAction = useAppSelector((state) => state.data.undoAction);
+
+    const dispatch = useAppDispatch();
 
     let listItems: React.ReactNode[];
     if (tasks && tasks.length > 0) {
@@ -42,12 +48,25 @@ const TaskList: React.FC = () => {
         setCloseModal(() => modalRef.current.close);
     }, [modalRef]);
 
+    const handleUndo = () => {
+        undoAction();
+        dispatch(dataActions.setUndoFunction(null));
+    };
+
     return (
         <section className={classes.list_wrapper}>
-            <div className={classes.btn_wrapper}>
+            <div className={classes.tool_bar_wrapper}>
                 <NewListButton btnStyles={btnStyles} onClick={openModal}>
                     <span>Add Task</span>
                 </NewListButton>
+                <Image
+                    src='/refresh.svg'
+                    alt='refresh'
+                    height={18}
+                    width={18}
+                    className={classes.refresh}
+                />
+                {undoAction && <div onClick={handleUndo}>Undo?</div>}
             </div>
             {(!listItems || listItems.length == 0) && (
                 <p className={classes.completed}>All tasks completed!</p>
