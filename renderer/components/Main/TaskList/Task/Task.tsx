@@ -19,7 +19,7 @@ const Task: React.FC<{
 
     return (
         <li className={classes.listitem}>
-            <Checkbox />
+            <Checkbox listId={props.listId} taskId={props.taskId}/>
             <TaskBody
                 listId={props.listId}
                 taskId={props.taskId}

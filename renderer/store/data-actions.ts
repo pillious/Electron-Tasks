@@ -28,7 +28,8 @@ export const getAllLists = () => {
  */
 export const getListTasks = (id: string) => {
     return async (dispatch: AppDispatch) => {
-        const tasks = (await gdata.getTasksInList({ tasklist: id })).result.items;
+        const tasks = (await gdata.getTasksInList({ tasklist: id, showCompleted: false })).result
+            .items;
 
         if (tasks && tasks.length > 0) {
             dispatch(dataActions.replaceAllActiveTasks(tasks));
