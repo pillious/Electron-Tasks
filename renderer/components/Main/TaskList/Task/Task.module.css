@@ -1,5 +1,25 @@
 .listitem {
+    position: relative;
     display: flex;
-    padding-bottom: 6px;
+    margin-bottom: 6px;
+    padding: 3px;
     min-height: 30px;
+}
+
+.listitem:hover {
+    background-color: #eee;
+}
+
+.delete {
+    display: none;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    color: red;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.listitem:hover .delete {
+    display: block;
 }

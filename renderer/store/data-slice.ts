@@ -61,7 +61,13 @@ const dataSlice = createSlice({
                 state.activeTasks.push(action.payload.task);
             }
         },
-        // deleteTask(state, action: PayloadAction<string>)
+        removeTask(state, action: PayloadAction<string>) {
+            const taskToDeleteIdx = state.activeTasks.findIndex(
+                (task) => task.id === action.payload
+            );
+            taskToDeleteIdx !== -1 &&
+                state.activeTasks.splice(taskToDeleteIdx, 1);
+        },
         updateIsLoading(state, action: PayloadAction<boolean>) {
             state.isLoading = action.payload;
         },

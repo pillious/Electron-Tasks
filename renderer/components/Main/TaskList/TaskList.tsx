@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useAppSelector } from '../../../hooks/useAppSelector';
 import Modal from '../../UI/Modal';
 import NewListButton from '../../UI/NewListButton';

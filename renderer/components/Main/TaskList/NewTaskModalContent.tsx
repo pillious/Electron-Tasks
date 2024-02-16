@@ -1,8 +1,8 @@
-import { useRef } from "react";
-import { useAppDispatch } from "../../../hooks/useAppDispatch";
-import { createTask } from "../../../store/data-actions";
-import ModalButtonGroup from "../../UI/ModalButtonGroup";
-import classes from "./NewTaskModalContent.module.css";
+import { useRef } from 'react';
+import { useAppDispatch } from '../../../hooks/useAppDispatch';
+import { createTask, updateTask } from '../../../store/data-actions';
+import ModalButtonGroup from '../../UI/ModalButtonGroup';
+import classes from './NewTaskModalContent.module.css';
 
 const NewTaskModalContent: React.FC<{
     closeModal: () => {};
@@ -16,8 +16,8 @@ const NewTaskModalContent: React.FC<{
     };
 }> = (props) => {
     let defaultValues = {
-        title: "",
-        description: "",
+        title: '',
+        description: '',
         due: null,
     };
     if (!props.isNewTask && props.inputValues) {
@@ -28,7 +28,7 @@ const NewTaskModalContent: React.FC<{
                 description: props.inputValues.description,
             }),
             ...(props.inputValues.due && {
-                due: props.inputValues.due.toLocaleDateString("en-CA"),
+                due: props.inputValues.due.toLocaleDateString('en-CA'),
             }),
         };
     }
@@ -40,75 +40,85 @@ const NewTaskModalContent: React.FC<{
     const dispatch = useAppDispatch();
 
     const submitHandler = (event) => {
-        const isTaskEdited = () => {
-            return (
-                defaultValues.title != nameInputRef.current.value.trim() ||
-                defaultValues.description !=
-                    descriptionInputRef.current.value.trim() ||
-                (!defaultValues.due &&
-                    dateInputRef.current.value.trim() === "") ||
-                defaultValues.due != dateInputRef.current.value
-            );
-        };
-
         event.preventDefault();
-        if (
-            nameInputRef.current &&
-            nameInputRef.current.value &&
-            isTaskEdited()
-        ) {
-            dispatch(
-                createTask(
-                    props.isNewTask,
-                    props.listId,
-                    nameInputRef.current.value,
-                    descriptionInputRef.current.value,
-                    dateInputRef.current.value
+
+        const isTitleEdited = defaultValues.title != nameInputRef.current.value.trim();
+        const isDescEdited = defaultValues.description != descriptionInputRef.current.value.trim();
+        const isDueDateEdited =
+            (!defaultValues.due && dateInputRef.current.value.trim() === '') ||
+            defaultValues.due != dateInputRef.current.value;
+        const isTaskEdited = isTitleEdited || isDescEdited || isDueDateEdited;
+
+        if (nameInputRef.current && nameInputRef.current.value && isTaskEdited) {
+            if (props.isNewTask) {
+                // perform insert
+                const task: gapi.client.tasks.Task = {
+                    title: nameInputRef.current.value,
+                    notes: descriptionInputRef.current.value,
+                    due: dateInputRef.current.value
                         ? new Date(dateInputRef.current.value).toISOString()
                         : null,
-                    props.taskId
-                )
-            );
+                    id: props.taskId,
+                };
 
-            nameInputRef.current.value = "";
-            descriptionInputRef.current.value = "";
-            dateInputRef.current.value = "";
+                dispatch(createTask(props.listId, task));
+            } else {
+                // perform update
+                const task: gapi.client.tasks.Task = {};
+                if (isTitleEdited) task.title = nameInputRef.current.value;
+                if (isDescEdited) task.notes = descriptionInputRef.current.value;
+                if (isDueDateEdited && dateInputRef.current.value)
+                    task.due = new Date(dateInputRef.current.value).toISOString();
+
+                dispatch(updateTask(props.listId, props.taskId, task));
+            }
+            // dispatch(
+            //     createTask(
+            //         props.isNewTask,
+            //         props.listId,
+            //         nameInputRef.current.value,
+            //         descriptionInputRef.current.value,
+            //         dateInputRef.current.value
+            //             ? new Date(dateInputRef.current.value).toISOString()
+            //             : null,
+            //         props.taskId
+            //     )
+            // );
+
+            nameInputRef.current.value = '';
+            descriptionInputRef.current.value = '';
+            dateInputRef.current.value = '';
         } else {
-            console.log("TODO: Dispatch create task failed.");
+            console.log('TODO: Dispatch create task failed.');
         }
         props.closeModal();
     };
 
     return (
         <form className={classes.form_control} onSubmit={submitHandler}>
-            <label htmlFor="name">Task Name:</label>
+            <label htmlFor='name'>Task Name:</label>
             <input
-                name="name"
-                type="text"
-                placeholder="Name"
+                name='name'
+                type='text'
+                placeholder='Name'
                 ref={nameInputRef}
                 defaultValue={defaultValues.title}
             />
 
-            <label htmlFor="description">Description:</label>
+            <label htmlFor='description'>Description:</label>
             <textarea
-                placeholder="Description"
-                name="description"
+                placeholder='Description'
+                name='description'
                 ref={descriptionInputRef}
                 defaultValue={defaultValues.description}
             />
 
-            <label htmlFor="due">Date:</label>
-            <input
-                type="date"
-                name="due"
-                ref={dateInputRef}
-                defaultValue={defaultValues.due}
-            />
+            <label htmlFor='due'>Date:</label>
+            <input type='date' name='due' ref={dateInputRef} defaultValue={defaultValues.due} />
 
             <ModalButtonGroup
                 onCancel={props.closeModal}
-                submitButtonLabel={props.isNewTask ? "Create" : "Update"}
+                submitButtonLabel={props.isNewTask ? 'Create' : 'Update'}
             />
         </form>
     );
