@@ -27,11 +27,6 @@ const IndexPage: React.FC = () => {
         }
     }, [isAuthenticated, dispatch, isGapiLoaded]);
 
-    // Reduce http calls during dev.
-    // useEffect(() => {
-    //     dispatch(getAllLists());
-    // }, [dispatch]);
-
     return (
         <div className={classes.wrapper}>
             <div className={classes.sidebar_wrapper}>

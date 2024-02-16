@@ -8,8 +8,6 @@ const gApiRequest = async <T,>(func: () => T): Promise<T> => {
     }
 
     try {
-        console.log("FJASKFDJASKDF")
-        console.log("HELLOOOOOOO???")
         return func();
     } catch (err) {
         console.log(err);

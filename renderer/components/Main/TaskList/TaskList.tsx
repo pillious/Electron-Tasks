@@ -57,6 +57,10 @@ const TaskList: React.FC = () => {
         dispatch(dataActions.setUndoFunction(null));
     };
 
+    const handleRefresh = () => {
+        dispatch(getListTasks(activeListId));
+    };
+
     return (
         <section className={classes.list_wrapper}>
             <div className={classes.tool_bar_wrapper}>
@@ -69,6 +73,7 @@ const TaskList: React.FC = () => {
                     height={18}
                     width={18}
                     className={classes.refresh}
+                    onClick={handleRefresh}
                 />
                 {undoAction && <div onClick={handleUndo}>Undo?</div>}
             </div>
