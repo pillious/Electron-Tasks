@@ -33,7 +33,7 @@ const Dropdown: React.FC<IProps> = (props) => {
 
     return (
         <div className={classes.dropdown_wrapper}>
-            <button onClick={toggleHandler} className={classes.toggle}>
+            <button onClick={toggleHandler} className={classes.toggle} data-is-open={open}>
                 {props.toggleElem}
             </button>
             <div className={classes.dropdown} data-is-open={open} ref={dropdownRef}>

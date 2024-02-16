@@ -1,6 +1,5 @@
 import * as gdata from '../helpers/gdata';
 import { AppDispatch } from '../store/index';
-import { authActions } from './auth-slice';
 import { dataActions } from './data-slice';
 
 /***
@@ -49,6 +48,18 @@ export const createList = (title: string) => {
             dispatch(dataActions.replaceAllActiveTasks([])); // Empty the current list of tasks.
         } catch (err) {
             console.log('Create new list failed.');
+            console.error(err);
+        }
+    };
+};
+
+export const updateList = (listid: string, title: string) => {
+    return async (dispatch: AppDispatch) => {
+        try {
+            await gdata.updateList({ tasklist: listid, resource: { title: title } });
+            dispatch(dataActions.changeListName({ id: listid, newName: title }));
+        } catch (err) {
+            console.log('Update list failed.');
             console.error(err);
         }
     };

@@ -8,8 +8,12 @@ const gApiRequest = async <T,>(func: () => T): Promise<T> => {
     }
 
     try {
+        console.log("FJASKFDJASKDF")
+        console.log("HELLOOOOOOO???")
         return func();
     } catch (err) {
+        console.log(err);
+        console.log('Retrying with new token');
         if (
             err.result.error.code == 401 ||
             (err.result.error.code == 403 && err.result.error.status == 'PERMISSION_DENIED')
@@ -85,11 +89,9 @@ export const deleteTask = async (options: Parameters<typeof gapi.client.tasks.ta
  */
 export const getProfilePicture = async () => {
     return await gApiRequest(async () => {
-        const resp = await gApiRequest<gapi.client.Request<gapi.client.people.Person>>(() =>
-            gapi.client.request({
-                path: 'https://people.googleapis.com/v1/people/me?personFields=photos',
-            })
-        );
+        const resp = await gapi.client.request({
+            path: 'https://people.googleapis.com/v1/people/me?personFields=photos',
+        });
 
         return resp.result.photos[0].url;
     });
