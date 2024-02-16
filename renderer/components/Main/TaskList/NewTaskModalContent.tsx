@@ -72,18 +72,6 @@ const NewTaskModalContent: React.FC<{
 
                 dispatch(updateTask(props.listId, props.taskId, task));
             }
-            // dispatch(
-            //     createTask(
-            //         props.isNewTask,
-            //         props.listId,
-            //         nameInputRef.current.value,
-            //         descriptionInputRef.current.value,
-            //         dateInputRef.current.value
-            //             ? new Date(dateInputRef.current.value).toISOString()
-            //             : null,
-            //         props.taskId
-            //     )
-            // );
 
             nameInputRef.current.value = '';
             descriptionInputRef.current.value = '';

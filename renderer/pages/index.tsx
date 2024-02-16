@@ -1,3 +1,5 @@
+/* global gapi */
+
 import { useEffect } from 'react';
 import Main from '../components/Main/Main';
 import Sidebar from '../components/Sidebar/Sidebar';
@@ -10,7 +12,8 @@ import classes from './index.module.css';
 const IndexPage: React.FC = () => {
     const dispatch = useAppDispatch();
     const isAuthenticated = useAppSelector((state) => state.auth.authenticated);
-    console.log('loaded');
+    const isGapiLoaded = useAppSelector((state) => state.auth.isGapiLoaded);
+    
     // Authenticate user on load.
     useEffect(() => {
         dispatch(authenticate());
@@ -18,11 +21,11 @@ const IndexPage: React.FC = () => {
 
     // Get user's Google Task lists once authenticated.
     useEffect(() => {
-        if (isAuthenticated) {
+        if (isAuthenticated && isGapiLoaded) {
             dispatch(getAllLists());
             dispatch(getProfilePicture());
         }
-    }, [isAuthenticated, dispatch]);
+    }, [isAuthenticated, dispatch, isGapiLoaded]);
 
     // Reduce http calls during dev.
     // useEffect(() => {

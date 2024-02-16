@@ -1,4 +1,4 @@
-import { getToken, hasValidToken, initClient, loadGisClient, revokeToken } from '../helpers/auth';
+import { getToken, hasValidToken, initClient, loadGisClient, loadTokenFromLocalStorage, revokeToken, saveTokenToLocalStorage } from '../helpers/auth';
 import * as gdata from '../helpers/gdata';
 import { AppDispatch } from '../store/index';
 import { authActions } from './auth-slice';
@@ -13,8 +13,13 @@ export const authenticate = () => {
     return async (dispatch: AppDispatch) => {
         // Initalizes the google auth2 client.
         try {
-            await initClient();
+            await initClient(() => dispatch(authActions.updateGapiLoaded(true)));
             await loadGisClient();
+            
+            const token = loadTokenFromLocalStorage();
+            if (token !== null) {
+                gapi.client.setToken(token);
+            }
 
             if (!hasValidToken()) {
                 console.log('Invalid token. Generating a new token...');
@@ -25,17 +30,12 @@ export const authenticate = () => {
                 console.log(gapi.client.getToken());
             }
 
+
+            saveTokenToLocalStorage(gapi.client.getToken());
             dispatch(authActions.isAuthenticated(hasValidToken()));
             if (!hasValidToken) {
                 throw new Error('Still invalid token after retry.');
             }
-
-            // gapi.client.tasks.tasklists.list()
-            //     .then((resp) => console.log(resp))
-            //     .catch(err => getToken(err))
-            //     .then(retry => gapi.client.tasks.tasklists.list())
-            //     .then(calendarAPIResponse => console.log(JSON.stringify(calendarAPIResponse)))
-            //     .catch(err  => console.log(err));
         } catch (err: any) {
             console.error(err);
             dispatch(authActions.isAuthenticated(false));

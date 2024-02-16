@@ -4,10 +4,12 @@ const initialState: {
     authenticated: boolean;
     authErrorMsg: string;
     profileImg: string;
+    isGapiLoaded: boolean;
 } = {
     authenticated: false,
     authErrorMsg: '',
     profileImg: '',
+    isGapiLoaded: false,
 };
 
 const authSlice = createSlice({
@@ -22,7 +24,10 @@ const authSlice = createSlice({
         },
         updateProfileImg(state, action: PayloadAction<string>) {
             state.profileImg = action.payload;
-        }
+        },
+        updateGapiLoaded(state, action: PayloadAction<boolean>) {
+            state.isGapiLoaded = action.payload;
+        },
         // login(state) {},
         // logout(state) {},
     },

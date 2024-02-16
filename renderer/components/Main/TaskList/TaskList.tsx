@@ -21,7 +21,6 @@ const TaskList: React.FC = () => {
         const sortedTasks = [...tasks].sort(
             (first, second) => parseInt(first.position) - parseInt(second.position)
         );
-        console.log(tasks);
         console.log(sortedTasks);
 
         listItems = sortedTasks.map((item) => (
