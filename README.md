@@ -7,9 +7,6 @@
 
   <p align="center">
     A Desktop Client for <br> Google Tasks
-    <br />
-    <br />
-    <small>* In Development*</small>
   </p>
 </div>
 
